@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAMES HERE"
+title: "US Congress - Tweets and COVID-19"
+author: "Darvesh Gorhe, Thomas Holvoet, Nicolo Ricci"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
