@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 congress_tweets.csv
+.DS_Store
