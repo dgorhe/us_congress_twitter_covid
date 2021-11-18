@@ -24,7 +24,7 @@
 <meta name="author" content="Darvesh Gorhe, Thomas Holvoet, Nicolo Ricci" />
 
 
-<meta name="date" content="2021-11-15" />
+<meta name="date" content="2021-11-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -76,7 +76,19 @@
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#excluding-tweet-content-from-missing-values"><i class="fa fa-check"></i><b>4.1</b> Excluding Tweet Content from Missing Values</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#geo"><i class="fa fa-check"></i><b>4.2</b> Geo</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-geo-values"><i class="fa fa-check"></i><b>4.2.1</b> Impact of Missing Geo Values</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#lang"><i class="fa fa-check"></i><b>4.3</b> Lang</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-lang-values"><i class="fa fa-check"></i><b>4.3.1</b> Impact of Missing Lang Values</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="missing-values.html"><a href="missing-values.html#other-columns"><i class="fa fa-check"></i><b>4.4</b> Other Columns</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
@@ -101,7 +113,37 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div id="excluding-tweet-content-from-missing-values" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Excluding Tweet Content from Missing Values</h2>
+<p>We excluded the column <code>tweet_content</code> because it will naturally have very different values. If we had things like sentiments, annotations, counts of handles, etc that information could be examined for missing values. Since we’re extracting tweets by their id, it is extremely unlikely that a row would not contain the tweet content. As such, there isn’t much to gain by checking for missing values in the <code>tweet_content</code> column. Given the diversity of tweets and congresspeople, it’s likely that any one word, mention, etc is quite sparse across all tweets across all congress members and perhaps even within a single congress member.</p>
+</div>
+<div id="geo" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Geo</h2>
+<p>Prior to extracting the tweets, we didn’t know how many would be geo-tagged. It’s apparent that the majority of tweets are not geo-tagged. The lack of geo tags do not affect the content of our analyses very much since we can make strong assumptions about the location of each senator or representative. We could group congress people by their specific district and constituency, but due to things like gerrymandering this could be an issue. Moreover, this would require us to associate a senator with all districts or no districts.</p>
+<div id="impact-of-missing-geo-values" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Impact of Missing Geo Values</h3>
+<p>The lack of geo-tagged tweets is not a huge issue for our analyses although it would be helpful to confirm assumptions. For example, if we had geo-tagged tweets, we could compare tweets posted outside of the congress member’s state versus tweets posted within a congress member’s state. But alas, we cannot have everything we desire.</p>
+</div>
+</div>
+<div id="lang" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Lang</h2>
+<p>Although much less frequent, the lang column contains a few missing values. When extracting data, Twitter labels those tweets whose language it cannot identify as “und” or undetermined. Typically, these tweets are labeled as such because they only contain URLs, hashtags, emojis, or some combination thereof. Undetermined tweets comprise the plurality of the non-English labled tweets which is interesting. There are even more undetermined tweets than Spanish tweets.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>In total 376 people in Congress had tweets labeled as und. however, of those 376, are there any members whose tweets have a significantly higher percentage of tweets labeled as und? There are 13 US Congress members with 5% or more of their tweets labeled und for the language.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Do these members of congress contribute a large portion of total tweets through their tweets labeled as und? Those with the highest proportion of tweets labeled und also tend to have the largest number of tweets labeled und.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div id="impact-of-missing-lang-values" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Impact of Missing Lang Values</h3>
+<p>The und values for lang are not necessarily a detriment to our overall analysis especially since they comprise an small proportion of overall tweets. Moreover, other than a few US Congress members, und tweets are not very common. The vast majority have less than 5% of their tweets labeled as und. Additionally, even with these tweets labeled as und, we may still be able to extract meaningful insights from the content of the tweets. The tweets themselves could contain words like COVID, COVID-19, the pandemic, etc. These would still help us understand the relationships between tweets and COVID.</p>
+</div>
+</div>
+<div id="other-columns" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Other Columns</h2>
+<p>There are no missing values from the other columns. This is mainly a result of the way the data was extracted. We had known Twitter users in mind and we extracted all their tweets within a specified time domain. Every tweet that could be retrieved has a corresponding identifying number (i.e. tweet_id field is non-empty). This isn’t a problem since it gives us much more information to work with. There are entire fields dedicated to analyzing subsets of linguistic content. From this data we can look at a multitude of features that could be useful to relate to COVID. For example, we can look at the frequency of the words COVID and COVID-19 over time, across congress members, and consequently by region. We have almost 500,000 tweets to analyze so even the simplest features will be useful.</p>
 
+</div>
 </div>
             </section>
 

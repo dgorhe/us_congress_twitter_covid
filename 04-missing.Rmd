@@ -1,1 +1,212 @@
 # Missing values
+
+```{r}
+# Imports
+library(ggplot2)
+library(tidyverse)
+library(patchwork)
+```
+
+
+```{r}
+# Function Definition
+plot_missing_parameters <- function(data, counts) {
+ 
+  # get dataframe of missing patterns
+  missing_patterns <- data.frame(is.na(data)) %>%
+    group_by_all() %>%
+    count(name = "count", sort = TRUE) %>%
+    ungroup()
+ 
+  #to know the number of missing rows we just some the count variable generated
+  total_num_rows <- sum(missing_patterns$count)
+ 
+  # create variable for the whole cases and ranking of patterns by frequency
+  missp <- missing_patterns %>%
+    mutate(complete_cases = rowSums(missing_patterns == TRUE) == 0) %>%
+    rowid_to_column(var = "Y")
+ 
+  # get ranking of complete cases among missing patterns
+  index_complete_cases <- missp[missp$complete_cases == TRUE, ]$Y
+ 
+  # create the plot that will stay on the top part
+  #We both retrieve the count of the missing and the percentage, that will be useful depending on
+  #the function call Boolean parameter counts
+  tplot <- missp %>%
+    pivot_longer(cols = -c("Y", "count", "complete_cases"), names_to = "variable", values_to = "bool") %>%
+    group_by(variable) %>%
+    summarize(countmissing = sum(bool * count)) %>%
+    mutate(percentmissing = countmissing / total_num_rows)
+  # set y aes of  depending on use_counts value
+  if(counts == TRUE){
+    tplot  <- tplot %>%
+      ggplot(aes(y = countmissing))
+  }
+  else{
+    tplot  <- tplot %>%
+      ggplot(aes(y = 100 * percentmissing))
+  }
+  # keep creating top plot
+  tplot <- tplot +
+    geom_bar(aes(x = reorder(variable, -countmissing)), stat="identity", fill="#6495ED", alpha=0.5) +
+    xlab("") +
+    ylab(ifelse(counts == TRUE, "number rows \n missing", "% rows \n missing")) +
+    labs(title = "Missing value patterns") +
+    theme_bw() +
+    theme(panel.grid.major.x = element_blank())
+ 
+  # main plot
+  mplot <- missp %>%
+    pivot_longer(cols = -c("Y", "count", "complete_cases"), names_to = "variable", values_to = "bool") %>%
+    group_by(variable) %>%
+    mutate(countmissing = sum(bool * count)) %>%
+    mutate(percentmissing = countmissing / total_num_rows) %>%
+    ggplot(aes(x = reorder(variable, -countmissing), y = reorder(Y, -Y), fill= bool, alpha = complete_cases)) +
+    geom_tile(color = "gray") +
+    annotate(geom = "text", y = nrow(missing_patterns)  + 1 - index_complete_cases, x = ncol(missing_patterns) / 2,
+             label="complete cases", hjust = 0.5) +
+    xlab("variable") +
+    ylab("missing pattern") +
+    scale_fill_manual(values = c("#cbcbcb", "#7f6fa1")) +
+    scale_alpha_manual(values = c(0.6,1)) +
+    theme_classic() +
+    theme(legend.position="none")
+ 
+  # create plot on the right side
+  rplot <- missp %>%
+    mutate(percentmissing = count / total_num_rows)
+ 
+  # set y aesthetics of right plot depending on counts value
+  if(counts == TRUE){
+    rplot <- rplot %>%
+      ggplot(aes(y = count, alpha = complete_cases))
+  }
+  else{
+    rplot <- rplot %>%
+      ggplot(aes(y = 100 * percentmissing, alpha = complete_cases))
+  }
+ 
+  # keep creating right plot
+  rplot <- rplot  +
+    geom_bar(aes(x= reorder(Y, -Y)), stat="identity", fill="#6495ED") +
+    xlab("") +
+    ylab(ifelse(counts == TRUE, "number of rows", "% rows")) +
+    scale_alpha_manual(values = c(0.6,1)) +
+    coord_flip() +
+    theme_bw() +
+    theme(legend.position="none") +
+    theme(panel.grid.major.y = element_blank())
+ 
+  # set y limits of top plot depending on counts value
+  if(!counts){
+    tplot <- tplot + ylim(0,100)
+    rplot <- rplot + ylim(0, 100)
+  }
+  else{
+    tplot <- tplot + expand_limits(y=c(0, NA))
+    rplot <- rplot + expand_limits(y=c(0, NA))
+  }
+ 
+ 
+  # put together the three plots with patchwork
+  design <- "
+    11111#
+    222223
+    222223
+    222223
+    222223"
+ 
+  tplot + mplot + rplot + plot_layout(design = design)
+}
+```
+
+```{r}
+# Importing Twitter Data
+congress <- read_csv("congress_tweets.csv", col_names = FALSE)
+colnames(congress) <- c("twitter_handle", "tweet_content", "tweet_id", "geo", "lang")
+congress_no_content <- congress[, c("twitter_handle", "tweet_id", "geo", "lang")]
+congress_no_content$geo[congress_no_content$geo == "None"] <- NA
+congress_no_content$geo[congress_no_content$lang == "und"] <- NA
+```
+
+
+```{r}
+plot_missing_parameters(congress_no_content, FALSE)
+```
+
+## Excluding Tweet Content from Missing Values
+We excluded the column `tweet_content` because it will naturally have very different values. If we had things like sentiments, annotations, counts of handles, etc that information could be examined for missing values. Since we're extracting tweets by their id, it is extremely unlikely that a row would not contain the tweet content. As such, there isn't much to gain by checking for missing values in the `tweet_content` column. Given the diversity of tweets and congresspeople, it's likely that any one word, mention, etc is quite sparse across all tweets across all congress members and perhaps even within a single congress member.
+
+## Geo
+Prior to extracting the tweets, we didn't know how many would be geo-tagged. It's apparent that the majority of tweets are not geo-tagged. The lack of geo tags do not affect the content of our analyses very much since we can make strong assumptions about the location of each senator or representative. We could group congress people by their specific district and constituency, but due to things like gerrymandering this could be an issue. Moreover, this would require us to associate a senator with all districts or no districts.
+
+### Impact of Missing Geo Values
+The lack of geo-tagged tweets is not a huge issue for our analyses although it would be helpful to confirm assumptions. For example, if we had geo-tagged tweets, we could compare tweets posted outside of the congress member's state versus tweets posted within a congress member's state. But alas, we cannot have everything we desire.
+
+## Lang
+Although much less frequent, the lang column contains a few missing values. When extracting data, Twitter labels those tweets whose language it cannot identify as "und" or undetermined. Typically, these tweets are labeled as such because they only contain URLs, hashtags, emojis, or some combination thereof. Undetermined tweets comprise the plurality of the non-English labled tweets which is interesting. There are even more undetermined tweets than Spanish tweets. 
+
+```{r}
+df <- congress %>% 
+  count(lang)
+
+langs <- filter(df, lang != "en")
+
+ggplot(data=langs, aes(x=lang, y=n)) +
+  geom_bar(stat="identity") +
+  xlab("Language Code") +
+  ylab("Number of Tweets")
+```
+
+In total 376 people in Congress had tweets labeled as und. however, of those 376, are there any members whose tweets have a significantly higher percentage of tweets labeled as und? There are 13 US Congress members with 5% or more of their tweets labeled und for the language.
+
+
+```{r}
+und_by_percent <- congress %>%
+  group_by(twitter_handle) %>% 
+  summarise(total = n(),
+            undetermined_lang = sum(lang == "und"),
+            percent_und = 100*(undetermined_lang/total)          
+  ) %>% 
+  arrange(desc(percent_und))
+
+und_by_percent <- filter(und_by_percent, percent_und > 5)
+
+ggplot(data=und_by_percent, aes(x=reorder(twitter_handle, percent_und), y=percent_und)) +
+  geom_bar(stat="identity") +
+  ylab("Congress Member") +
+  xlab("Number of Tweets") +
+  coord_flip()
+```
+
+Do these members of congress contribute a large portion of total tweets through their tweets labeled as und? Those with the highest proportion of tweets labeled und also tend to have the largest number of tweets labeled und. 
+
+```{r}
+und_by_total <- congress %>%
+  group_by(twitter_handle) %>% 
+  summarise(total = n(),
+            undetermined_lang = sum(lang == "und"),
+  ) %>% 
+  arrange(desc(undetermined_lang))
+
+und_by_total <- filter(und_by_total, undetermined_lang > 50)
+
+ggplot(data=und_by_total, aes(x=reorder(twitter_handle, undetermined_lang), y=undetermined_lang)) +
+  geom_bar(stat="identity") +
+  ylab("Congress Member") +
+  xlab("Number of Tweets") +
+  coord_flip()
+```
+
+### Impact of Missing Lang Values
+The und values for lang are not necessarily a detriment to our overall analysis especially since they comprise an small proportion of overall tweets. Moreover, other than a few US Congress members, und tweets are not very common. The vast majority have less than 5% of their tweets labeled as und. Additionally, even with these tweets labeled as und, we may still be able to extract meaningful insights from the content of the tweets. The tweets themselves could contain words like COVID, COVID-19, the pandemic, etc. These would still help us understand the relationships between tweets and COVID. 
+
+## Other Columns
+There are no missing values from the other columns. This is mainly a result of the way the data was extracted. We had known Twitter users in mind and we extracted all their tweets within a specified time domain. Every tweet that could be retrieved has a corresponding identifying number (i.e. tweet_id field is non-empty). This isn't a problem since it gives us much more information to work with. There are entire fields dedicated to analyzing subsets of linguistic content. From this data we can look at a multitude of features that could be useful to relate to COVID. For example, we can look at the frequency of the words COVID and COVID-19 over time, across congress members, and consequently by region. We have almost 500,000 tweets to analyze so even the simplest features will be useful. 
+
+
+
+
+
+
+
