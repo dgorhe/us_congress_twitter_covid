@@ -1,1 +1,7 @@
 # Data transformation
+
+## Congress Members Tweets
+We decided to retain all of the values from this dataset because the tweets labeled as missing values were not technically absent or missing. That or the fact that so many are missing and thus the feature itself is ignored (e.g. geolocation). Most of the cleaning was done when the data was being retrieved via the Twitter API. We used the new Tweepy python package and Python 3.9 to retrieve tweets from Twitter's V2 API endpoint. This new version of the endpoint provides features which were not utilized for this analysis. We chose the V2 endpoint to ensure replicatability for as long as possible. The old API is not yet deprecated so the tweet retrieval is probably translatable to the V1.1 API.
+
+## Google's Changes in Mobility Data
+For 
