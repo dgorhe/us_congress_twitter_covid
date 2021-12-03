@@ -1,1 +1,90 @@
 # Results
+```{r loading}
+
+pkg_check <- function(pkg) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg, dependencies = TRUE)
+  }
+}
+
+pkg_check("tidyverse")
+pkg_check("ggplot2")
+pkg_check("tidyr")
+pkg_check("dplyr")
+pkg_check("knitr")
+pkg_check("gridExtra")
+pkg_check("tibble")
+pkg_check("GGally")
+pkg_check("parcoords")
+
+# Original file (101 mb)
+congress <- read_csv("congress_tweets_appended.csv")
+REDUCTION_FACTOR = 1000
+
+# Choose a random subset to make plot generation easier
+total_rows = nrow(congress)
+sample_size = as.integer(nrow(congress)/REDUCTION_FACTOR)
+congress <- congress[sort(sample.int(total_rows, sample_size)), ]
+
+write_csv(congress, "congress_tweets_sample.csv")
+```
+
+
+<!-- - Frequency of top 10 and top 100 words -->
+<!--     - Does it follow Zipf's Law? -->
+<!--     - How many COVID terms are included in those 100 and where are they positioned? -->
+```{r topwords}
+# Did it in python so just import csv, make plots, write analysis
+
+```
+
+<!-- - Heat map of mobility change divided by number of covid related tweets from congress members in that state -->
+```{r mobility_heatmap}
+
+```
+
+<!-- - Parallel coordinate plot of congress members, number of tweets with covid, changes in mobility -->
+<!--     - Might need to refine this later -->
+```{r congress_changesinmobility}
+# Finished mobility data consolidation 
+congress
+```
+
+<!-- How to actually extract policy related content from tweets?? -->
+<!-- - Policy related tweets from congress members (bar chart) -->
+```{r policyrelated}
+
+```
+
+<!-- - Correlation between the number of tweets from congress members and changes in mobility in their region -->
+<!--     - Label most correlated and least correlated members? -->
+```{r tweetsmobility_correlation}
+
+```
+
+
+<!-- - Cleveland dot plot of residuals from tweets vs mobility above -->
+```{r clevelandresiduals}
+
+```
+
+
+<!-- - **Not sure if time series is valuable or useful for these questions*** -->
+
+<!-- - **Need to learn more about PCA and biplots*** -->
+
+<!-- - Mosaic plot of political party, higher than average COVID related tweets vs lower than average COVID tweets, and positive vs negative changes in mobility -->
+```{r mosaic}
+
+```
+
+
+<!-- - Histogram of number of times COVID is mentioned *per tweet* -->
+<!--     - i.e. if covid is mentioned 1 time, 2 times, 3 times, etc -->
+<!--     - Boxplot of the same data (but try to come up with other boxplot) -->
+```{r covidoccurance_boxplot}
+
+```
+
+    
+<!-- - Alluvial seems unproductive or redundant for this data -->
