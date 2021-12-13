@@ -16,26 +16,103 @@ pkg_check("gridExtra")
 pkg_check("tibble")
 pkg_check("GGally")
 pkg_check("parcoords")
+pkg_check("vcd")
 
 # Original file (101 mb)
-congress <- read_csv("congress_tweets_appended.csv")
-REDUCTION_FACTOR = 1000
+classified_covid_tweets_path <- "/Users/darvesh/Programming/R/fall2021/gr5702/us_congress_twitter_covid/data/created/congress_tweets_labeled.csv"
+classified_covid_tweets <- read_csv(classified_covid_tweets_path)
 
+# REDUCTION_FACTOR = 1000
 # Choose a random subset to make plot generation easier
-total_rows = nrow(congress)
-sample_size = as.integer(nrow(congress)/REDUCTION_FACTOR)
-congress <- congress[sort(sample.int(total_rows, sample_size)), ]
+# total_rows = nrow(congress)
+# sample_size = as.integer(nrow(congress)/REDUCTION_FACTOR)
+# congress <- congress[sort(sample.int(total_rows, sample_size)), ]
+# write_csv(congress, "congress_tweets_sample.csv")
 
-write_csv(congress, "congress_tweets_sample.csv")
+```
+The following mosaic plot will help us get a better idea of how changes in mobility roughly correspond with congress members characteristics. This gives us a baseline with which to compare to COVID related metrics.
+
+
+```{r covid_mosaic}
+mosaic_table <- classified_covid_tweets
+mosaic_vars <- c("type_of_member", 
+                 "covid_label", 
+                 "party_of_member", 
+                 # "unabbreviated_state", 
+                 "retail_and_recreation_percent_change_from_baseline", "grocery_and_pharmacy_yearly_percent_change","parks_percent_yearly_change", "transit_stations_yearly_percent_change" , "workplaces_yearly_percent_change","residential_yearly_percent_change")
+
+colnames(mosaic_table) <- c("type", "covid", "party", "state", "Grocery & Pharmacy", "Parks & Recreation", "Transit Station", "Workplaces", "Residential")
+
+
+mosaic_table <- pivot_longer(
+  data = mosaic_table,
+  cols = -c(type, covid, party, state),
+  names_to = "location_type",
+  values_to = "change_in_mobility"
+  )
+
+mosaic_table <- mosaic_table[mosaic_vars]
+
+# mosaic_table <- mosaic_table %>%
+#   mutate(
+#     positive_change_grocery_and_pharmacy = if_else(grocery_and_pharmacy_yearly_percent_change > 0, "yes", "no"),
+#     positive_change_ = if_else(grocery_and_pharmacy_yearly_percent_change > 0, "yes", "no"),
+#     positive_change_grocery = if_else(grocery_and_pharmacy_yearly_percent_change > 0, "yes", "no"),
+#     positive_change_grocery = if_else(grocery_and_pharmacy_yearly_percent_change > 0, "yes", "no"),
+#     positive_change_grocery = if_else(grocery_and_pharmacy_yearly_percent_change > 0, "yes", "no"),
+#     positive_change_grocery = if_else(grocery_and_pharmacy_yearly_percent_change > 0, "yes", "no"),
+#     positive_change_grocery = if_else(grocery_and_pharmacy_yearly_percent_change > 0, "yes", "no"),
+#   )
+
+# mosaic_table
+# 
+# vcd::mosaic(
+#   ~positive_change_grocery + type_of_member + party_of_member, 
+#   main = "Sign of Change (+/-) vs Congress Member Characteristics", 
+#   shade=TRUE,
+#   direction = c("v", "h", "v"),
+#   data = mosaic_table
+# )
 ```
 
 
-<!-- - Frequency of top 10 and top 100 words -->
-<!--     - Does it follow Zipf's Law? -->
-<!--     - How many COVID terms are included in those 100 and where are they positioned? -->
-```{r topwords}
-# Did it in python so just import csv, make plots, write analysis
+```{r fdjsk}
+covid_correlation <- read_csv(classified_covid_tweets)
+names(covid_correlation)
+covid_correlation_vars <- c("full_name_of_member", "covid_label", "retail_and_recreation_percent_change_from_baseline", "grocery_and_pharmacy_yearly_percent_change","parks_percent_yearly_change", "transit_stations_yearly_percent_change" , "workplaces_yearly_percent_change","residential_yearly_percent_change" )
 
+covid_correlation <- covid_correlation[covid_correlation_vars]
+colnames(covid_correlation) <- c("name", "covid", "Retail", "Grocery & Pharmacy", "Parks & Recreation", "Transit Station", "Workplaces", "Residential")
+
+covid_correlation <- pivot_longer(
+  data = covid_correlation,
+  cols = -c(name, covid),
+  names_to = "location_type",
+  values_to = "change_in_mobility"
+  )
+
+
+covid_correlation
+covid_correlation_to_plot <- covid_correlation %>% 
+  group_by(name, location_type, change_in_mobility) %>% 
+  summarise(
+    n = n()    
+  )
+
+# colnames(covid_correlation) <- c("Congress Member", "Location Type", "Change in Mobility")
+covid_correlation_to_plot
+ggplot(covid_correlation_to_plot, aes(x=n, y=change_in_mobility)) + 
+  geom_point() + 
+  facet_wrap(~location_type) +
+  ylab("Yearly Change in Mobility") +
+  xlab("Number of COVID Related Tweets")
+```
+The spiking is a rather interesting phenomenon in this visualization. The specific way in which this is noisy suggests that there is some period nature to the relationship between the number of covid related tweets and over changes in mobility.
+
+```{r covidfreq}
+covid_correlation_continued <- covid_correlation %>% 
+  group_by(name, covid) %>% 
+  
 ```
 
 <!-- - Heat map of mobility change divided by number of covid related tweets from congress members in that state -->
@@ -46,8 +123,7 @@ write_csv(congress, "congress_tweets_sample.csv")
 <!-- - Parallel coordinate plot of congress members, number of tweets with covid, changes in mobility -->
 <!--     - Might need to refine this later -->
 ```{r congress_changesinmobility}
-# Finished mobility data consolidation 
-congress
+
 ```
 
 <!-- How to actually extract policy related content from tweets?? -->
@@ -69,11 +145,6 @@ congress
 ```
 
 
-<!-- - **Not sure if time series is valuable or useful for these questions*** -->
-
-<!-- - **Need to learn more about PCA and biplots*** -->
-
-<!-- - Mosaic plot of political party, higher than average COVID related tweets vs lower than average COVID tweets, and positive vs negative changes in mobility -->
 ```{r mosaic}
 
 ```
@@ -85,6 +156,3 @@ congress
 ```{r covidoccurance_boxplot}
 
 ```
-
-    
-<!-- - Alluvial seems unproductive or redundant for this data -->
