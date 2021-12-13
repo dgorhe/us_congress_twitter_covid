@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-congress_tweets.csv
 .DS_Store
-congress_tweets_cleaned.csv
-congress_tweets_appended.csv
+.ipynb_checkpoints/
+./data/*
