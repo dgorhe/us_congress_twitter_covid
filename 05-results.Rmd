@@ -22,14 +22,9 @@ pkg_check("ggmosaic")
 pkg_check("tidyverse")
 pkg_check("ggridges")
 
-# Congress Tweets + Yearly Mobility
-tweets_with_mobility <- "/Users/darvesh/Programming/R/fall2021/gr5702/us_congress_twitter_covid/data/created/tweets_yearly_mobility_data.csv"
+# Original file (101 mb)
+tweets_with_mobility <- "https://us-congress-twitter-covid.s3.amazonaws.com/tweets_yearly_mobility_data.csv"
 tweets <- read_csv(tweets_with_mobility)
-
-# Nicolo's data
-# ciao1 <- read_csv("ciao1.csv")
-# Movements <- read_csv("Movements.csv")
-# data <- read_csv("./data.csv")
 ```
 
 <!-- ![a](./nicolo_images/Cases_tweetcounts_timeseries.png) -->
@@ -47,6 +42,7 @@ The truth may be another one. We suspect that the real correlation may be linked
 
 We can observe that we have a negative correlation between the retail and recreation activity movement and the number of tweets. Which means that in general, the more tweet are written, the less mobility was experienced for the purposes aforementioned. The cause of this may rely in again more in the timeline of events. The biggest mobility changes may have occurred at the start of the pandemics in USA. Therefore,we know the highest number of tweets were at the start of (first 10 weeks). This fact coupled with the fact that either because people were more scared to go out, or either because some restricting policies were promoted; could be the reason of this negative correlation. This correlation has a very low p-value of 0.0118, hence we can again refuse the null hypothesis at a 2% confidence level. On the other hand, we cant make any assumption on the retail movement,because of the p-value.
 
+## COVID vs. Mobility
 
 ```{r correlation, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE, fig.align='center'}
 covid_correlation <- tweets
@@ -162,3 +158,197 @@ ggplot(df, aes(x = name, y = reorder(Sentiment_Category, +name))) +
   ylab("Sentiment Category")
 ```
 While it is no surprise that vaccines, testing, and masks were included among these outliers, it is interesting to note that social distancing is not as frequently mentioned. Perhaps this is a clue to the types of outreach and education that sticks with constituents. Masks and testing appear to be the most consistently frequent sentiments across the congress members' tweets. Herd immunity is also absent from these outliers' tweets.
+
+## Analyzing the policy of representatives of Congress through their tweets
+
+### Extracting the data
+
+We now have a look at what COVID-related policies the representatives of US Congress tweet about, and how they feel about those. To this end, we collected a dataset of all tweets from the representatives in the year 2020 as described in section 2. We captured the sentiment of these tweets through a Natural Language Processing model that gave each tweet a 'positive' and a 'negative' score. We elaborated on this in section 3.
+
+Over the course of the pandemic, numerous ways have been suggested to *flatten the curve*. We summarize them into 5 categories: vaccination, testing, lockdown, face masks, and social distancing. For each category a number of keywords is specified:
+
+| Policy            | Keywords                                                                                          |
+|-------------------|---------------------------------------------------------------------------------------------------|
+| Vaccination       | vaccination, vaccinated, vaccine                                                                  |
+| Testing           | testing, gettested, tested, PCR                                                                   |
+| Lockdown          | lockdown, quarantine, quarantining                                                                |
+| Face masks        | mask, face covering, face cover, masking, facemask                                                |
+| Social distancing | social distancing, socialdistancing, safe distance, physical distancing, 6 feet apart, 6feetapart |
+
+As such, each tweet can be classified as 'related' to a certain policy by checking if it contains any of these keywords.
+
+```{r, include=FALSE}
+df <- read.csv("https://us-congress-twitter-covid.s3.amazonaws.com/congress_twitter_sentiment.csv")
+df <- subset (df, select = -X)
+df <- drop_na(df)
+```
+
+```{r, include=FALSE}
+add_keyword_column <- function(df, name, keywords) {
+    df[name] <- df %>% apply(1, function(row) {
+    for (kw in keywords) {
+      if (grepl(kw, tolower(row['tweet_content']), fixed = TRUE)) {
+        return(TRUE);
+      }
+    }
+    return(FALSE);
+  });
+  return(df);
+}
+
+VACCINE_KEYWORDS <- c("vaccination", "vaccinated", "vaccine")
+TESTING_KEYWORDS <- c("testing", "gettested", "tested", "PCR")
+LOCKDOWN_KEYWORDS <- c("lockdown", "quarantine", "quarantining")
+MASK_KEYWORDS <- c("mask", "face covering", "face cover", "masking", "facemask")
+SOCIAL_DISTANCING_KEYWORDS <- c("social distancing", "socialdistancing", "safe distance", "physical distancing", "6 feet apart", "6feetapart")
+HERD_IMMUNITY_KEYWORDS <- c("herd immunity")
+
+df <- add_keyword_column(df, 'vaccine', VACCINE_KEYWORDS)
+df <- add_keyword_column(df, 'testing', TESTING_KEYWORDS)
+df <- add_keyword_column(df, 'lockdown', LOCKDOWN_KEYWORDS)
+df <- add_keyword_column(df, 'mask', MASK_KEYWORDS)
+df <- add_keyword_column(df, 'social_distancing', SOCIAL_DISTANCING_KEYWORDS)
+df <- add_keyword_column(df, 'herd_immunity', HERD_IMMUNITY_KEYWORDS)
+```
+
+
+### Patterns in policy
+
+In the media, it is clear that politicians' preferences for these policies largely differ. We try to find patterns in these preferences by firstly looking at the frequency in tweets related to these policies. In the parallel coordinate plot below, every line represents a member of Congress, the values correspond to the frequency of their tweets related to a certain policy.
+
+```{r, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE}
+df %>%
+  filter(party == "Democrat" | party == "Republican") %>%
+  group_by(twitter_handle, party) %>%
+  summarise(
+    vaccine = mean(vaccine),
+    testing = mean(testing),
+    lockdown = mean(lockdown),
+    mask = mean(mask),
+    social_distancing = mean(social_distancing)
+  ) %>%
+  ungroup() %>%
+  select(c(party, testing, mask, social_distancing, lockdown, vaccine)) %>%
+  GGally::ggparcoord(columns = 2:6, groupColumn = "party", scale = "uniminmax", alphaLines = .35, splineFactor = 5) +
+    scale_color_manual(values = c("#48A0DF", "#FA6A4B")) + 
+    labs(title = "COVID related policies in tweets") + 
+    xlab("Policy") +
+    ylab("Tweet frequency")
+```
+
+```{r, include=FALSE}
+df %>%
+  group_by(state, party) %>%
+  summarise(
+    vaccine = mean(vaccine),
+    testing = mean(testing),
+    lockdown = mean(lockdown),
+    mask = mean(mask),
+    social_distancing = mean(social_distancing),
+    herd_immunity = mean(herd_immunity)
+  ) %>%
+  ungroup() %>%
+  select(c(party, vaccine, testing, lockdown, mask, social_distancing)) %>%
+  parcoords::parcoords(
+    withD3 = TRUE,
+    color = c(colorScale = "scaleOrdinal", colorBy = 'party', rownames = FALSE),
+    brushMode = "1d-axes",
+    reorderable = TRUE
+  ) 
+```
+
+
+We notice some interesting patterns here. Overall it is clear that democrats tweet more frequently about testing and masking up as preventive measures. Interestingly, there appears to be an inverse relationship between the tweet frequency on masks and social distancing. Some members of congress focus on masking up, whereas others shift their focus to social distancing as a way of slowing the spread of the virus. We can also see that few republicans tweet about masking up as a preventive measure, however, there is a significant fraction of republicans that do tweet about social distancing and testing in the battle against COVID. Though, the most frequent tweeters on social distancing are democrat.
+
+
+Perhaps the most surprising insight in this graph is that a lockdown is more frequently discussed by republicans. We can see that not many democrats tweet about this, they resort to other policies. There are even some outliers among the republicans that tweet very frequently about a lockdown. Taking into account the media coverage over the past year this is rather surprising as the republican party generally advocated for opening up the country. The question remains whether these republicans are actually promoting or contesting a potential lockdown.
+
+
+The sentiment analysis sheds some light on this. For every tweet we have a 'positive' and a 'negative' score provided by the NLP model. In the plot below we visualize the average 'positiveness' of tweets for every policy category, per party. This 'positiveness' is defined as the ratio of the average positive score for tweets related to a policy to the average score of tweets not related to this policy. A score > 1 indicates that tweets on a certain policy are generally more positive. A 'positiveness' < 1 indicates a rather negative sentiment towards this policy.
+
+
+```{r, echo=FALSE, warning=FALSE, results='hide',fig.keep='all', message=FALSE}
+policy_sent <- df %>%
+  filter(party == "Democrat" | party == "Republican") %>%
+  pivot_longer(c(vaccine, testing, lockdown, mask, social_distancing)) %>%
+  group_by(name, party, value) %>%
+  summarise(sent = mean(positive))
+
+divide_by_fn <- function(sent, value) {
+  if (value[1]) {
+    return (sent[1]/ sent[2]);
+  } else {
+    return (sent[2] / sent[1]);
+  }
+}
+
+policy_sent %>%
+  group_by(name, party) %>%
+  summarise(sent_diff = divide_by_fn(sent, value)) %>%
+  ggplot(aes(x=name, y=sent_diff, fill=party)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  scale_fill_manual("legend", values = c("Democrat" = "#48A0DF", "Republican" = "#FA6A4B")) +
+  xlab("Policy") + 
+  ylab("Positiveness score") + 
+  labs(title = "Sentiment profile")
+```
+```{r, include=FALSE}
+lockdown_freqs <- df %>% 
+  group_by(twitter_handle) %>%
+  summarise(lockdown_freq = mean(lockdown))
+
+lockdown_freqs[lockdown_freqs$lockdown_freq == max(lockdown_freqs$lockdown_freq),]
+```
+
+For all policy categories except 'lockdown', the sentiment is about the same for both parties. However, a lockdown is contentious. There is a clear negative sentiment of republicans towards a lockdown, whereas for democrats a lockdown is percepted more positive than other measures. Republican representative @RepDanCrenshaw is the furthest outlier on the lockdown scale. His tweets indeed show a very negative sentiment towards a lockdown:
+
+```{r, echo=FALSE, warning=FALSE}
+tweets <- df %>%
+  filter((twitter_handle == "RepDanCrenshaw") & lockdown) %>%
+  top_n(5, -positive) %>%
+  select(tweet_content)
+
+for (tweet in tweets) {
+  print(tweet);
+}
+```
+
+```{r, include=FALSE}
+freqs <- df %>% 
+  group_by(twitter_handle) %>%
+  summarise(freq = mean(social_distancing))
+
+freqs[freqs$freq == max(freqs$freq),]
+```
+
+We compare his sentiment profile to that to one of the democrats from the cluster that promotes social distancing the most: @RepKathleenRice.
+
+
+```{r, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE}
+policy_sent <- df %>%
+  filter(party == "Democrat" | party == "Republican") %>%
+  pivot_longer(c(vaccine, testing, lockdown, mask, social_distancing)) %>%
+  group_by(twitter_handle, name, party, value) %>%
+  summarise(sent = mean(positive))
+
+divide_by_fn <- function(sent, value) {
+  if (value[1]) {
+    return (sent[1]/ sent[2]);
+  } else {
+    return (sent[2] / sent[1]);
+  }
+}
+
+policy_sent %>%
+  group_by(twitter_handle, name, party) %>%
+  summarise(sent_diff = divide_by_fn(sent, value)) %>%
+  filter(twitter_handle == "RepDanCrenshaw" | twitter_handle == "RepKathleenRice") %>%
+  ggplot(aes(x=name, y=sent_diff, fill=twitter_handle)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+    scale_fill_manual("legend", values = c("RepDanCrenshaw" = "#FA6A4B", "RepKathleenRice" = "#48A0DF")) +
+  xlab("Policy") + 
+  ylab("Positiveness score") + 
+  labs(title = "Sentiment profile")
+```
+
+Although the democrat representative @RepKathleenRice is significantly less vocal about a lockdown, her tweets on the matter are convincingly positive. @RepDanCrenshaw's is relatively pessimistic. He clearly prefers social distancing and vaccination as opposed to masking up and a lockdown.
