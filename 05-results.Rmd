@@ -169,16 +169,11 @@
 <!-- Nicolo's Code END -->
 
 
-
-
 ![a](./nicolo_images/Cases_tweetcounts_timeseries.png)
 ![b](./nicolo_images/deaths_tweetcounts_correlation.png)
 ![c](./nicolo_images/deaths_tweets_timeseries_normalised)
 
-If we take a look at our correlations coefficient we can see two different stories. When it comes to number of covid-related tweets in relation to the number of deaths we have low correlation . The correlation coefficient is this case is 0.21(corr2), which means there is a positive correlation. However if we take a look at the correlation test cortest2 we can see that the pvalue is 0.1951, hence even with a confidence level of 10% we cannot reject the null hypothesis that the correlation happened by chance.
-On the other hand, we can analyse our correlation of cases and number of tweets.In corr1 we have stored a correlation value of -0.48 and the associated pvalue is 0.0025, which means we can reject our null hypothesis and state that there is a correlation between the number of cases and number of tweets. 
-The surprising feature, is that the correlation is negative, where common sense may suggest there would be a positive correlation.In other words, we may expect, higher number of cases could trigger a higher number of people talking about it.
-The truth may be another one. We suspect that the real correlation may be linked to the dates itself. As we can see in the interval chart, we have that in the first 5 weeks (start date 4/1/2020), people were more scared and more prone to talk about it, then as the virus became usual among our lives, the covid tweets chat started to slowly but steadily decline. Even in the last part of the graph, when cases started taking off exponentially, the number of covid related tweets continued to slow.
+If we take a look at our correlations coefficient we can see two different stories. When it comes to number of covid-related tweets in relation to the number of deaths we have low correlation . The correlation coefficient is this case is 0.21(corr2), which means there is a positive correlation. However if we take a look at the correlation test cortest2 we can see that the pvalue is 0.1951, hence even with a confidence level of 10% we cannot reject the null hypothesis that the correlation happened by chance. On the other hand, we can analyse our correlation of cases and number of tweets.In corr1 we have stored a correlation value of -0.48 and the associated pvalue is 0.0025, which means we can reject our null hypothesis and state that there is a correlation between the number of cases and number of tweets. The surprising feature, is that the correlation is negative, where common sense may suggest there would be a positive correlation.In other words, we may expect, higher number of cases could trigger a higher number of people talking about it. The truth may be another one. We suspect that the real correlation may be linked to the dates itself. As we can see in the interval chart, we have that in the first 5 weeks (start date 4/1/2020), people were more scared and more prone to talk about it, then as the virus became usual among our lives, the covid tweets chat started to slowly but steadily decline. Even in the last part of the graph, when cases started taking off exponentially, the number of covid related tweets continued to slow.
 
 ![d](./nicolo_images/mobility_cases_correlation.png)
 ![e](./nicolo_images/tweetcounts_cases_correlation_weekly.png)
@@ -402,11 +397,9 @@ df %>%
 ```
 
 
-We notice some interesting patterns here. Overall it is clear that democrats tweet more frequently about testing and masking up as preventive measures. Interestingly, there appears to be an inverse relationship between the tweet frequency on masks and social distancing. Some members of congress focus on masking up, whereas others shift their focus to social distancing as a way of slowing the spread of the virus. We can also see that few republicans tweet about masking up as a preventive measure, however, there is a significant fraction of republicans that do tweet about social distancing and testing in the battle against COVID. Though, the most frequent tweeters on social distancing are democrat.
-
+We notice some interesting patterns here. Overall it is clear that democrats tweet more frequently about testing and masking up as preventive measures. Interestingly, there appears to be an inverse relationship between the tweet frequency on masks and social distancing. Some members of congress focus on masking up, whereas others shift their focus to social distancing as a way of slowing the spread of the virus. We can also see that few republicans tweet about masking up as a preventive measure, however, there is a significant fraction of republicans that do tweet about social distancing and testing in the battle against COVID. Though, the most frequent tweeters on social distancing are Democrat.
 
 Perhaps the most surprising insight in this graph is that a lockdown is more frequently discussed by republicans. We can see that not many democrats tweet about this, they resort to other policies. There are even some outliers among the republicans that tweet very frequently about a lockdown. Taking into account the media coverage over the past year this is rather surprising as the republican party generally advocated for opening up the country. The question remains whether these republicans are actually promoting or contesting a potential lockdown.
-
 
 The sentiment analysis sheds some light on this. For every tweet we have a 'positive' and a 'negative' score provided by the NLP model. In the plot below we visualize the average 'positiveness' of tweets for every policy category, per party. This 'positiveness' is defined as the ratio of the average positive score for tweets related to a policy to the average score of tweets not related to this policy. A score > 1 indicates that tweets on a certain policy are generally more positive. A 'positiveness' < 1 indicates a rather negative sentiment towards this policy.
 
@@ -466,7 +459,6 @@ freqs[freqs$freq == max(freqs$freq),]
 ```
 
 We compare his sentiment profile to that to one of the democrats from the cluster that promotes social distancing the most: @RepKathleenRice.
-
 
 ```{r, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE}
 policy_sent <- df %>%
