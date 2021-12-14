@@ -76,16 +76,23 @@
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#congress-and-mobility"><i class="fa fa-check"></i><b>1.1</b> Congress and Mobility</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#congress-and-sentiment"><i class="fa fa-check"></i><b>1.2</b> Congress and Sentiment</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#congress-members-tweets"><i class="fa fa-check"></i><b>2.1</b> Congress Members Tweets</a></li>
 <li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#googles-changes-in-mobility-data"><i class="fa fa-check"></i><b>2.2</b> Google’s Changes in Mobility Data</a></li>
+<li class="chapter" data-level="2.3" data-path="data-sources.html"><a href="data-sources.html#number-of-tweets-and-cases"><i class="fa fa-check"></i><b>2.3</b> Number of tweets and cases</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#congress-members-tweets-1"><i class="fa fa-check"></i><b>3.1</b> Congress Members Tweets</a></li>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#congress-members-tweets-1"><i class="fa fa-check"></i><b>3.1</b> Congress Members Tweets</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-transformation.html"><a href="data-transformation.html#tweet-cleaning-process"><i class="fa fa-check"></i><b>3.1.1</b> Tweet Cleaning Process</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-transformation.html"><a href="data-transformation.html#appending-zero-shot-classification-labels"><i class="fa fa-check"></i><b>3.1.2</b> Appending Zero Shot Classification Labels</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#googles-changes-in-mobility-data-1"><i class="fa fa-check"></i><b>3.2</b> Google’s Changes in Mobility Data</a></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#number-of-tweets-and-cases-1"><i class="fa fa-check"></i><b>3.3</b> Number of tweets and cases</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
 <ul>
@@ -94,11 +101,12 @@
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-geo-values"><i class="fa fa-check"></i><b>4.2.1</b> Impact of Missing Geo Values</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#lang"><i class="fa fa-check"></i><b>4.3</b> Lang</a>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#language"><i class="fa fa-check"></i><b>4.3</b> Language</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-lang-values"><i class="fa fa-check"></i><b>4.3.1</b> Impact of Missing Lang Values</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="missing-values.html"><a href="missing-values.html#other-columns"><i class="fa fa-check"></i><b>4.4</b> Other Columns</a></li>
+<li class="chapter" data-level="4.5" data-path="missing-values.html"><a href="missing-values.html#number-of-tweets-and-cases-2"><i class="fa fa-check"></i><b>4.5</b> Number of tweets and cases</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -124,115 +132,12 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
-<p>The following mosaic plot will help us get a better idea of how changes in mobility roughly correspond with congress members characteristics. This gives us a baseline with which to compare to COVID related metrics.</p>
-<pre><code>##  [1] &quot;twitter_handle&quot;                                    
-##  [2] &quot;tweet_content&quot;                                     
-##  [3] &quot;tweet_id&quot;                                          
-##  [4] &quot;geolocation_of_tweet&quot;                              
-##  [5] &quot;language_of_tweet&quot;                                 
-##  [6] &quot;date_and_time&quot;                                     
-##  [7] &quot;full_name_of_member&quot;                               
-##  [8] &quot;abbreviated_state&quot;                                 
-##  [9] &quot;unabbreviated_state&quot;                               
-## [10] &quot;type_of_member&quot;                                    
-## [11] &quot;party_of_member&quot;                                   
-## [12] &quot;covid_label&quot;                                       
-## [13] &quot;retail_and_recreation_percent_change_from_baseline&quot;
-## [14] &quot;grocery_and_pharmacy_yearly_percent_change&quot;        
-## [15] &quot;parks_percent_yearly_change&quot;                       
-## [16] &quot;transit_stations_yearly_percent_change&quot;            
-## [17] &quot;workplaces_yearly_percent_change&quot;                  
-## [18] &quot;residential_yearly_percent_change&quot;</code></pre>
-<pre><code>## # A tibble: 2,395,716 × 4
-##    name              covid     location_type       change_in_mobility
-##    &lt;chr&gt;             &lt;chr&gt;     &lt;chr&gt;                            &lt;dbl&gt;
-##  1 Adriano Espaillat covid     Retail &amp; Recreation            -16.6  
-##  2 Adriano Espaillat covid     Grocery &amp; Pharmacy               0.509
-##  3 Adriano Espaillat covid     Parks &amp; Recreation              47.8  
-##  4 Adriano Espaillat covid     Transit Station                -27.2  
-##  5 Adriano Espaillat covid     Workplaces                     -27.3  
-##  6 Adriano Espaillat covid     Residential                      9.28 
-##  7 Adriano Espaillat non-covid Retail &amp; Recreation            -16.6  
-##  8 Adriano Espaillat non-covid Grocery &amp; Pharmacy               0.509
-##  9 Adriano Espaillat non-covid Parks &amp; Recreation              47.8  
-## 10 Adriano Espaillat non-covid Transit Station                -27.2  
-## # … with 2,395,706 more rows</code></pre>
-<pre><code>## # A tibble: 2,652 × 4
-## # Groups:   name, location_type [2,652]
-##    name                location_type       change_in_mobility     n
-##    &lt;chr&gt;               &lt;chr&gt;                            &lt;dbl&gt; &lt;int&gt;
-##  1 A. Donald McEachin  Grocery &amp; Pharmacy              -0.137   724
-##  2 A. Donald McEachin  Parks &amp; Recreation              18.9     724
-##  3 A. Donald McEachin  Residential                      9.32    724
-##  4 A. Donald McEachin  Retail &amp; Recreation            -11.9     724
-##  5 A. Donald McEachin  Transit Station                -15.9     724
-##  6 A. Donald McEachin  Workplaces                     -26.1     724
-##  7 A. Drew Ferguson IV Grocery &amp; Pharmacy               0.955   183
-##  8 A. Drew Ferguson IV Parks &amp; Recreation              15.7     183
-##  9 A. Drew Ferguson IV Residential                      7.35    183
-## 10 A. Drew Ferguson IV Retail &amp; Recreation             -7.04    183
-## # … with 2,642 more rows</code></pre>
-<p><img src="finalproj_files/figure-html/correlation-1.png" width="672" />
-The outliers and difference in variance is a rather interesting phenomenon in this visualization. An interesting follow-up to this plot is the question: are the outliers across location categories the same congress members? It is possible that these are different outliers across each category.</p>
-<pre><code>## # A tibble: 399,286 × 18
-##    twitter_handle tweet_content       tweet_id geolocation_of_… language_of_twe…
-##    &lt;chr&gt;          &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;           
-##  1 RepEspaillat   &quot;Pass the #CASHAct…  1.34e18 None             English         
-##  2 RepEspaillat   &quot;News of the loss …  1.34e18 None             English         
-##  3 RepEspaillat   &quot;#WearAMask wash y…  1.34e18 None             English         
-##  4 RepEspaillat   &quot;Can someone tell …  1.34e18 None             English         
-##  5 RepEspaillat   &quot;Delighted to join…  1.34e18 None             English         
-##  6 RepEspaillat   &quot;As we near the cl…  1.34e18 None             English         
-##  7 RepEspaillat   &quot;#COVID19 exploite…  1.34e18 None             English         
-##  8 RepEspaillat   &quot;American families…  1.34e18 None             English         
-##  9 RepEspaillat   &quot;An extension to t…  1.34e18 None             English         
-## 10 RepEspaillat   &quot;RT @joacosta29: P…  1.34e18 None             Spanish         
-## # … with 399,276 more rows, and 13 more variables: date_and_time &lt;dttm&gt;,
-## #   full_name_of_member &lt;chr&gt;, abbreviated_state &lt;chr&gt;,
-## #   unabbreviated_state &lt;chr&gt;, type_of_member &lt;chr&gt;, party_of_member &lt;chr&gt;,
-## #   covid_label &lt;chr&gt;,
-## #   retail_and_recreation_percent_change_from_baseline &lt;dbl&gt;,
-## #   grocery_and_pharmacy_yearly_percent_change &lt;dbl&gt;,
-## #   parks_percent_yearly_change &lt;dbl&gt;, …</code></pre>
-<pre><code>## # A tibble: 3,749 × 18
-##    twitter_handle tweet_content      tweet_id geolocation_of_t… language_of_twe…
-##    &lt;chr&gt;          &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;           
-##  1 MazieHirono    &quot;Millions of peop…  1.34e18 None              English         
-##  2 MazieHirono    &quot;Mele Kalikimaka!…  1.34e18 {&#39;place_id&#39;: &#39;01… English         
-##  3 MazieHirono    &quot;Trump is running…  1.34e18 None              English         
-##  4 MazieHirono    &quot;RT @USGSVolcanoe…  1.34e18 None              English         
-##  5 MazieHirono    &quot;None of this wou…  1.34e18 None              English         
-##  6 MazieHirono    &quot;By allowing stat…  1.34e18 None              English         
-##  7 MazieHirono    &quot;Our work has onl…  1.34e18 None              English         
-##  8 MazieHirono    &quot;Hawaii’s Congres…  1.34e18 None              English         
-##  9 MazieHirono    &quot;But in 1996 a le…  1.34e18 None              English         
-## 10 MazieHirono    &quot;In exchange citi…  1.34e18 None              English         
-## # … with 3,739 more rows, and 13 more variables: date_and_time &lt;dttm&gt;,
-## #   full_name_of_member &lt;chr&gt;, abbreviated_state &lt;chr&gt;,
-## #   unabbreviated_state &lt;chr&gt;, type_of_member &lt;chr&gt;, party_of_member &lt;chr&gt;,
-## #   covid_label &lt;chr&gt;,
-## #   retail_and_recreation_percent_change_from_baseline &lt;dbl&gt;,
-## #   grocery_and_pharmacy_yearly_percent_change &lt;dbl&gt;,
-## #   parks_percent_yearly_change &lt;dbl&gt;, …</code></pre>
-<p><img src="finalproj_files/figure-html/common_outliers-1.png" width="672" />
-However, the outliers in parks, grocery &amp; pharmacy, retail &amp; recreation, and transit stations are the same 3 outliers. Most of them have non-covid related tweets which could be why they are so influential. Mazie K. Hirono is senator from Hawaii, Brian Schatz is a senator from Ohio, and Ed Case is a representative from Hawaii. Since two senators are from Hawaii, this suggests a geographic element to the extreme changes in mobility relative to other representatives. Parks and transit stations seem to have to most variation in terms of the number of tweets vs</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-5-1.png" width="672" />
-While it is no surprise that vaccines, testing, and masks were included among these outliers, it is interesting to note that social distancing is not as frequently mentioned. Perhaps this is a clue to the types of outreach and education that sticks with constituents.</p>
-<pre><code>## # A tibble: 1,590,124 × 5
-##    type           covid     party location_type                  positive_change
-##    &lt;fct&gt;          &lt;fct&gt;     &lt;fct&gt; &lt;chr&gt;                          &lt;fct&gt;          
-##  1 Representative covid     D     positive_change_parks          yes            
-##  2 Representative covid     D     positive_change_transit_stati… no             
-##  3 Representative covid     D     positive_change_parks          no             
-##  4 Representative covid     D     positive_change_transit_stati… yes            
-##  5 Representative non-covid D     positive_change_parks          yes            
-##  6 Representative non-covid D     positive_change_transit_stati… no             
-##  7 Representative non-covid D     positive_change_parks          no             
-##  8 Representative non-covid D     positive_change_transit_stati… yes            
-##  9 Representative non-covid D     positive_change_parks          yes            
-## 10 Representative non-covid D     positive_change_transit_stati… no             
-## # … with 1,590,114 more rows</code></pre>
-<p><img src="finalproj_files/figure-html/covid_mosaic-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/correlation-1.png" width="672" style="display: block; margin: auto;" />
+Ratther unsurprisingly, there seems to be little correlation between the number of tweets by members of the US Congress and changes in mobility in their respective areas. However, something that is different across categories is the variance in the data. For example, the Parks &amp; Recreation category has the highest variation followed by the Transit Station. It makes sense for the Residential and Workplaces categories to have low variance. One possible explanation is that Parks &amp; Recreation encompasses a large variety of activities and settings. The outliers and difference in variance is a rather interesting phenomenon in this visualization. An interesting follow-up to this plot is the question: are the outliers across location categories the same congress members? It is possible that these are different outliers across each category. But there are 3 consistent outliers across the following categories: Grocery &amp; Pharmacy, Parks &amp; Recreation, Retail, and Transit Station.</p>
+<p><img src="finalproj_files/figure-html/common_outliers-1.png" width="672" style="display: block; margin: auto;" />
+The outliers in the aforementioned categories are in fact the same 3 outliers! Most of them have non-covid related tweets which could be why they are so influential. Mazie K. Hirono is senator from Hawaii, Brian Schatz is a senator from Ohio, and Ed Case is a representative from Hawaii. Since two senators are from Hawaii, this suggests a geographic element to the extreme changes in mobility relative to other representatives. That being said, having a member from Ohio casts doubt on a solely geographic explanation. We can look at the content of their tweets a bit more closely to uncover any potential patterns. Specifically, let us look at the content of their tweets for COVID adjacent terms (masks, vaccines, etc).</p>
+<p><img src="finalproj_files/figure-html/congress_sentiment-1.png" width="672" style="display: block; margin: auto;" />
+While it is no surprise that vaccines, testing, and masks were included among these outliers, it is interesting to note that social distancing is not as frequently mentioned. Perhaps this is a clue to the types of outreach and education that sticks with constituents. Masks and testing appear to be the most consistently frequent sentiments across the congress members’ tweets. Herd immunity is also absent from these outliers’ tweets.</p>
 
 </div>
             </section>

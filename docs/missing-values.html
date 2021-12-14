@@ -24,7 +24,7 @@
 <meta name="author" content="Darvesh Gorhe, Thomas Holvoet, Nicolo Ricci" />
 
 
-<meta name="date" content="2021-11-18" />
+<meta name="date" content="2021-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -73,9 +73,27 @@
 <li><a href="./">US Congress Tweet Analysis</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
-<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#congress-and-mobility"><i class="fa fa-check"></i><b>1.1</b> Congress and Mobility</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#congress-and-sentiment"><i class="fa fa-check"></i><b>1.2</b> Congress and Sentiment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#congress-members-tweets"><i class="fa fa-check"></i><b>2.1</b> Congress Members Tweets</a></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#googles-changes-in-mobility-data"><i class="fa fa-check"></i><b>2.2</b> Google’s Changes in Mobility Data</a></li>
+<li class="chapter" data-level="2.3" data-path="data-sources.html"><a href="data-sources.html#number-of-tweets-and-cases"><i class="fa fa-check"></i><b>2.3</b> Number of tweets and cases</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#congress-members-tweets-1"><i class="fa fa-check"></i><b>3.1</b> Congress Members Tweets</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-transformation.html"><a href="data-transformation.html#tweet-cleaning-process"><i class="fa fa-check"></i><b>3.1.1</b> Tweet Cleaning Process</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-transformation.html"><a href="data-transformation.html#appending-zero-shot-classification-labels"><i class="fa fa-check"></i><b>3.1.2</b> Appending Zero Shot Classification Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#googles-changes-in-mobility-data-1"><i class="fa fa-check"></i><b>3.2</b> Google’s Changes in Mobility Data</a></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#number-of-tweets-and-cases-1"><i class="fa fa-check"></i><b>3.3</b> Number of tweets and cases</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#excluding-tweet-content-from-missing-values"><i class="fa fa-check"></i><b>4.1</b> Excluding Tweet Content from Missing Values</a></li>
@@ -83,11 +101,12 @@
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-geo-values"><i class="fa fa-check"></i><b>4.2.1</b> Impact of Missing Geo Values</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#lang"><i class="fa fa-check"></i><b>4.3</b> Lang</a>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#language"><i class="fa fa-check"></i><b>4.3</b> Language</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-lang-values"><i class="fa fa-check"></i><b>4.3.1</b> Impact of Missing Lang Values</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="missing-values.html"><a href="missing-values.html#other-columns"><i class="fa fa-check"></i><b>4.4</b> Other Columns</a></li>
+<li class="chapter" data-level="4.5" data-path="missing-values.html"><a href="missing-values.html#number-of-tweets-and-cases-2"><i class="fa fa-check"></i><b>4.5</b> Number of tweets and cases</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -126,8 +145,8 @@
 <p>The lack of geo-tagged tweets is not a huge issue for our analyses although it would be helpful to confirm assumptions. For example, if we had geo-tagged tweets, we could compare tweets posted outside of the congress member’s state versus tweets posted within a congress member’s state. But alas, we cannot have everything we desire.</p>
 </div>
 </div>
-<div id="lang" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Lang</h2>
+<div id="language" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Language</h2>
 <p>Although much less frequent, the lang column contains a few missing values. When extracting data, Twitter labels those tweets whose language it cannot identify as “und” or undetermined. Typically, these tweets are labeled as such because they only contain URLs, hashtags, emojis, or some combination thereof. Undetermined tweets comprise the plurality of the non-English labled tweets which is interesting. There are even more undetermined tweets than Spanish tweets.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>In total 376 people in Congress had tweets labeled as und. however, of those 376, are there any members whose tweets have a significantly higher percentage of tweets labeled as und? There are 13 US Congress members with 5% or more of their tweets labeled und for the language.</p>
@@ -142,6 +161,10 @@
 <div id="other-columns" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Other Columns</h2>
 <p>There are no missing values from the other columns. This is mainly a result of the way the data was extracted. We had known Twitter users in mind and we extracted all their tweets within a specified time domain. Every tweet that could be retrieved has a corresponding identifying number (i.e. tweet_id field is non-empty). This isn’t a problem since it gives us much more information to work with. There are entire fields dedicated to analyzing subsets of linguistic content. From this data we can look at a multitude of features that could be useful to relate to COVID. For example, we can look at the frequency of the words COVID and COVID-19 over time, across congress members, and consequently by region. We have almost 500,000 tweets to analyze so even the simplest features will be useful.</p>
+</div>
+<div id="number-of-tweets-and-cases-2" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Number of tweets and cases</h2>
+<p>We did not encounter any problem with the missing values, indeed, the problem was the opposite, too much data. We were lucky enough to find very high quality data online.</p>
 
 </div>
 </div>

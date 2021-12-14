@@ -119,7 +119,7 @@ plot_missing_parameters <- function(data, counts) {
 
 ```{r}
 # Importing Twitter Data
-congress <- read_csv("congress_tweets.csv", col_names = FALSE)
+congress <- read_csv("https://us-congress-twitter-covid.s3.amazonaws.com/congress_tweets.csv", col_names = FALSE)
 colnames(congress) <- c("twitter_handle", "tweet_content", "tweet_id", "geo", "lang")
 congress_no_content <- congress[, c("twitter_handle", "tweet_id", "geo", "lang")]
 congress_no_content$geo[congress_no_content$geo == "None"] <- NA
@@ -140,7 +140,7 @@ Prior to extracting the tweets, we didn't know how many would be geo-tagged. It'
 ### Impact of Missing Geo Values
 The lack of geo-tagged tweets is not a huge issue for our analyses although it would be helpful to confirm assumptions. For example, if we had geo-tagged tweets, we could compare tweets posted outside of the congress member's state versus tweets posted within a congress member's state. But alas, we cannot have everything we desire.
 
-## Lang
+## Language
 Although much less frequent, the lang column contains a few missing values. When extracting data, Twitter labels those tweets whose language it cannot identify as "und" or undetermined. Typically, these tweets are labeled as such because they only contain URLs, hashtags, emojis, or some combination thereof. Undetermined tweets comprise the plurality of the non-English labled tweets which is interesting. There are even more undetermined tweets than Spanish tweets. 
 
 ```{r}
@@ -203,8 +203,4 @@ There are no missing values from the other columns. This is mainly a result of t
 
 ## Number of tweets and cases
 We did not encounter any problem with the missing values, indeed, the problem was the opposite, too much data. We were lucky enough to find very high quality data online.
-
-
-
-
 
