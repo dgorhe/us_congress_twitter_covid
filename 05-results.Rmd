@@ -146,9 +146,9 @@ ggplot(df, aes(x = name, y = reorder(Sentiment_Category, +name))) +
 ```
 While it is no surprise that vaccines, testing, and masks were included among these outliers, it is interesting to note that social distancing is not as frequently mentioned. Perhaps this is a clue to the types of outreach and education that sticks with constituents. Masks and testing appear to be the most consistently frequent sentiments across the congress members' tweets. Herd immunity is also absent from these outliers' tweets.
 
-# Analyzing the policy of representatives of Congress through their tweets
+## Analyzing the policy of representatives of Congress through their tweets
 
-## Extracting the data
+### Extracting the data
 
 We now have a look at what COVID-related policies the representatives of US Congress tweet about, and how they feel about those. To this end, we collected a dataset of all tweets from the representatives in the year 2020 as described in section 2. We captured the sentiment of these tweets through a Natural Language Processing model that gave each tweet a 'positive' and a 'negative' score. We elaborated on this in section 3.
 
@@ -199,7 +199,7 @@ df <- add_keyword_column(df, 'herd_immunity', HERD_IMMUNITY_KEYWORDS)
 ```
 
 
-## Patterns in policy
+### Patterns in policy
 
 In the media, it is clear that politicians' preferences for these policies largely differ. We try to find patterns in these preferences by firstly looking at the frequency in tweets related to these policies. In the parallel coordinate plot below, every line represents a member of Congress, the values correspond to the frequency of their tweets related to a certain policy.
 

@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="missing-values.html"/>
-<link rel="next" href="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"/>
+<link rel="next" href="interactive-component.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -115,18 +115,14 @@
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#covid-vs.-mobility"><i class="fa fa-check"></i><b>5.1</b> COVID vs. Mobility</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"><a href="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"><i class="fa fa-check"></i><b>6</b> Analyzing the policy of representatives of Congress through their tweets</a>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#analyzing-the-policy-of-representatives-of-congress-through-their-tweets"><i class="fa fa-check"></i><b>5.2</b> Analyzing the policy of representatives of Congress through their tweets</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"><a href="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html#extracting-the-data"><i class="fa fa-check"></i><b>6.1</b> Extracting the data</a></li>
-<li class="chapter" data-level="6.2" data-path="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"><a href="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html#patterns-in-policy"><i class="fa fa-check"></i><b>6.2</b> Patterns in policy</a></li>
+<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#extracting-the-data"><i class="fa fa-check"></i><b>5.2.1</b> Extracting the data</a></li>
+<li class="chapter" data-level="5.2.2" data-path="results.html"><a href="results.html#patterns-in-policy"><i class="fa fa-check"></i><b>5.2.2</b> Patterns in policy</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>7</b> Interactive component</a></li>
-<li class="chapter" data-level="8" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>8</b> Conclusion</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="conclusion.html"><a href="conclusion.html#number-of-tweets-cases-and-mobility-3"><i class="fa fa-check"></i><b>8.1</b> Number of tweets cases and mobility</a></li>
-<li class="chapter" data-level="8.2" data-path="conclusion.html"><a href="conclusion.html#congress-members-tweets-2"><i class="fa fa-check"></i><b>8.2</b> Congress Members Tweets</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -157,6 +153,68 @@ The outliers in the aforementioned categories are in fact the same 3 outliers! M
 <p><img src="finalproj_files/figure-html/congress_sentiment-1.png" width="672" style="display: block; margin: auto;" />
 While it is no surprise that vaccines, testing, and masks were included among these outliers, it is interesting to note that social distancing is not as frequently mentioned. Perhaps this is a clue to the types of outreach and education that sticks with constituents. Masks and testing appear to be the most consistently frequent sentiments across the congress members’ tweets. Herd immunity is also absent from these outliers’ tweets.</p>
 </div>
+<div id="analyzing-the-policy-of-representatives-of-congress-through-their-tweets" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Analyzing the policy of representatives of Congress through their tweets</h2>
+<div id="extracting-the-data" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Extracting the data</h3>
+<p>We now have a look at what COVID-related policies the representatives of US Congress tweet about, and how they feel about those. To this end, we collected a dataset of all tweets from the representatives in the year 2020 as described in section 2. We captured the sentiment of these tweets through a Natural Language Processing model that gave each tweet a ‘positive’ and a ‘negative’ score. We elaborated on this in section 3.</p>
+<p>Over the course of the pandemic, numerous ways have been suggested to <em>flatten the curve</em>. We summarize them into 5 categories: vaccination, testing, lockdown, face masks, and social distancing. For each category a number of keywords is specified:</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="83%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Policy</th>
+<th>Keywords</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vaccination</td>
+<td>vaccination, vaccinated, vaccine</td>
+</tr>
+<tr class="even">
+<td>Testing</td>
+<td>testing, gettested, tested, PCR</td>
+</tr>
+<tr class="odd">
+<td>Lockdown</td>
+<td>lockdown, quarantine, quarantining</td>
+</tr>
+<tr class="even">
+<td>Face masks</td>
+<td>mask, face covering, face cover, masking, facemask</td>
+</tr>
+<tr class="odd">
+<td>Social distancing</td>
+<td>social distancing, socialdistancing, safe distance, physical distancing, 6 feet apart, 6feetapart</td>
+</tr>
+</tbody>
+</table>
+<p>As such, each tweet can be classified as ‘related’ to a certain policy by checking if it contains any of these keywords.</p>
+</div>
+<div id="patterns-in-policy" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Patterns in policy</h3>
+<p>In the media, it is clear that politicians’ preferences for these policies largely differ. We try to find patterns in these preferences by firstly looking at the frequency in tweets related to these policies. In the parallel coordinate plot below, every line represents a member of Congress, the values correspond to the frequency of their tweets related to a certain policy.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>We notice some interesting patterns here. Overall it is clear that democrats tweet more frequently about testing and masking up as preventive measures. Interestingly, there appears to be an inverse relationship between the tweet frequency on masks and social distancing. Some members of congress focus on masking up, whereas others shift their focus to social distancing as a way of slowing the spread of the virus. We can also see that few republicans tweet about masking up as a preventive measure, however, there is a significant fraction of republicans that do tweet about social distancing and testing in the battle against COVID. Though, the most frequent tweeters on social distancing are democrat.</p>
+<p>Perhaps the most surprising insight in this graph is that a lockdown is more frequently discussed by republicans. We can see that not many democrats tweet about this, they resort to other policies. There are even some outliers among the republicans that tweet very frequently about a lockdown. Taking into account the media coverage over the past year this is rather surprising as the republican party generally advocated for opening up the country. The question remains whether these republicans are actually promoting or contesting a potential lockdown.</p>
+<p>The sentiment analysis sheds some light on this. For every tweet we have a ‘positive’ and a ‘negative’ score provided by the NLP model. In the plot below we visualize the average ‘positiveness’ of tweets for every policy category, per party. This ‘positiveness’ is defined as the ratio of the average positive score for tweets related to a policy to the average score of tweets not related to this policy. A score &gt; 1 indicates that tweets on a certain policy are generally more positive. A ‘positiveness’ &lt; 1 indicates a rather negative sentiment towards this policy.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>For all policy categories except ‘lockdown’, the sentiment is about the same for both parties. However, a lockdown is contentious. There is a clear negative sentiment of republicans towards a lockdown, whereas for democrats a lockdown is percepted more positive than other measures. Republican representative <span class="citation">@RepDanCrenshaw</span> is the furthest outlier on the lockdown scale. His tweets indeed show a very negative sentiment towards a lockdown:</p>
+<pre><code>## [1] &quot;Speaker Pelosi holds COVID relief hostage while people in her state suffer under Democrat lockdowns.The lockdowns need to stop. Pelosi’s political games need to stop.All of these so-called “leaders” need to put the country first for once. https://t.co/V8PPpBnv7L&quot;                                    
+## [2] &quot;Gov. Cuomo incessantly lectures and criticizes GOP governors for loosening lockdowns to save livelihoods. And much of the media lets him get away with it.But we can’t ignore his disastrous decisions that led to 32000 people dying and the exact spike experts warned us about. https://t.co/OJ2buRjB4R&quot;
+## [3] &quot;“We have to live with the virus risks while fortifying the health system and protecting the most vulnerable.”This is exactly right. We can’t allow fear-mongers to use new cases to push for new lockdowns. We can trust Americans to understand the risks and safely reopen. https://t.co/iuEVjtURRY&quot;     
+## [4] &quot;“The same states that are loudest in demanding a federal rescue have hurt themselves the most with long strict lockdowns and tax-and-spend policies.”Spot on from @WSJopinion. The left is also the loudest in shaming red states for reopening and getting people back to work. https://t.co/PPJSQj0RK4&quot;  
+## [5] &quot;RT @HouseCommerce: Spread the word that a national quarantine is not real. Be sure to follow @CDCgov for accurate and most up-to-date info…&quot;</code></pre>
+<p>We compare his sentiment profile to that to one of the democrats from the cluster that promotes social distancing the most: <span class="citation">@RepKathleenRice</span>.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Although the democrat representative <span class="citation">@RepKathleenRice</span> is significantly less vocal about a lockdown, her tweets on the matter are convincingly positive. <span class="citation">@RepDanCrenshaw</span>’s is relatively pessimistic. He clearly prefers social distancing and vaccination as opposed to masking up and a lockdown.</p>
+
+</div>
+</div>
 </div>
             </section>
 
@@ -164,7 +222,7 @@ While it is no surprise that vaccines, testing, and masks were included among th
         </div>
       </div>
 <a href="missing-values.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="interactive-component.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

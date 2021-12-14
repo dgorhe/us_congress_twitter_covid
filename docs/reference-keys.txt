@@ -26,5 +26,3 @@ extracting-the-data
 patterns-in-policy
 interactive-component
 conclusion
-number-of-tweets-cases-and-mobility-3
-congress-members-tweets-2
