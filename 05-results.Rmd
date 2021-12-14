@@ -1,32 +1,32 @@
 # Results
 ```{r loading, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE}
-# knitr::opts_chunk$set(echo = TRUE)
-# 
-# pkg_check <- function(pkg) {
-#   if (!require(pkg, character.only = TRUE)) {
-#     install.packages(pkg, dependencies = TRUE)
-#   }
-# }
-# 
-# pkg_check("tidyverse")
-# pkg_check("ggplot2")
-# pkg_check("tidyr")
-# pkg_check("dplyr")
-# pkg_check("knitr")
-# pkg_check("gridExtra")
-# pkg_check("tibble")
-# pkg_check("GGally")
-# pkg_check("parcoords")
-# pkg_check("vcd")
-# pkg_check("ggmosaic")
-# pkg_check("tidyverse")
-# pkg_check("ggridges")
-# 
-# # Original file (101 mb)
-# tweets_with_mobility <- "https://us-congress-twitter-covid.s3.amazonaws.com/tweets_yearly_mobility_data.csv"
-# tweets <- read_csv(tweets_with_mobility)
-# ```
-# 
+knitr::opts_chunk$set(echo = TRUE)
+
+pkg_check <- function(pkg) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg, dependencies = TRUE)
+  }
+}
+
+pkg_check("tidyverse")
+pkg_check("ggplot2")
+pkg_check("tidyr")
+pkg_check("dplyr")
+pkg_check("knitr")
+pkg_check("gridExtra")
+pkg_check("tibble")
+pkg_check("GGally")
+pkg_check("parcoords")
+pkg_check("vcd")
+pkg_check("ggmosaic")
+pkg_check("tidyverse")
+pkg_check("ggridges")
+
+# Original file (101 mb)
+tweets_with_mobility <- "https://us-congress-twitter-covid.s3.amazonaws.com/tweets_yearly_mobility_data.csv"
+tweets <- read_csv(tweets_with_mobility)
+```
+
 # <!-- Nicolo's Code START -->
 # ```{r}
 # # we filter the dataset to include only USA, this is because we are assuming that the majority of the english language tweets we are dealing are coming from USA.
