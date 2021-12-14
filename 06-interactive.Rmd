@@ -19,7 +19,7 @@ df$region <- tolower(df$unabbreviated_state)
 df
 ```
 
-```{r, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE, animation.hook='gifski', interval=0.6}
+```{r, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE, animation.hook='gifski', interval=0.15}
 usa_map <- map_data("state")
 
 dates = unique(df$date)
@@ -40,12 +40,12 @@ for (i in 1:365) {
       labs(title = paste("Number of COVID related tweets by members of US Congress on ", y)) + 
       xlab(NULL) + 
       ylab(NULL) +
-      theme(axis.line=element_blank(),axis.text.x=element_blank(),
-          axis.text.y=element_blank(),axis.ticks=element_blank(),
+      theme(axis.line=element_blank(), axis.text.x=element_blank(),
+          axis.text.y=element_blank(), axis.ticks=element_blank(),
           axis.title.x=element_blank(),
           axis.title.y=element_blank(),
-          panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
-          panel.grid.minor=element_blank(),plot.background=element_blank())
+          panel.background=element_blank(), panel.border=element_blank(), panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(), plot.background=element_blank())
   )
 }
 ```
