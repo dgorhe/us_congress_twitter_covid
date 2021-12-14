@@ -24,7 +24,7 @@
 <meta name="author" content="Darvesh Gorhe, Thomas Holvoet, Nicolo Ricci" />
 
 
-<meta name="date" content="2021-11-18" />
+<meta name="date" content="2021-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -73,13 +73,48 @@
 <li><a href="./">US Congress Tweet Analysis</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
-<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#congress-and-mobility"><i class="fa fa-check"></i><b>1.1</b> Congress and Mobility</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#congress-and-sentiment"><i class="fa fa-check"></i><b>1.2</b> Congress and Sentiment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#congress-members-tweets"><i class="fa fa-check"></i><b>2.1</b> Congress Members Tweets</a></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#googles-changes-in-mobility-data"><i class="fa fa-check"></i><b>2.2</b> Google’s Changes in Mobility Data</a></li>
+<li class="chapter" data-level="2.3" data-path="data-sources.html"><a href="data-sources.html#number-of-tweets-cases-and-mobility"><i class="fa fa-check"></i><b>2.3</b> Number of tweets cases and mobility</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#congress-members-tweets-1"><i class="fa fa-check"></i><b>3.1</b> Congress Members Tweets</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-transformation.html"><a href="data-transformation.html#tweet-cleaning-process"><i class="fa fa-check"></i><b>3.1.1</b> Tweet Cleaning Process</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-transformation.html"><a href="data-transformation.html#appending-zero-shot-classification-labels"><i class="fa fa-check"></i><b>3.1.2</b> Appending Zero Shot Classification Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#googles-changes-in-mobility-data-1"><i class="fa fa-check"></i><b>3.2</b> Google’s Changes in Mobility Data</a></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#number-of-tweets-cases-and-mobility-1"><i class="fa fa-check"></i><b>3.3</b> Number of tweets cases and mobility</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#excluding-tweet-content-from-missing-values"><i class="fa fa-check"></i><b>4.1</b> Excluding Tweet Content from Missing Values</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#geo"><i class="fa fa-check"></i><b>4.2</b> Geo</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-geo-values"><i class="fa fa-check"></i><b>4.2.1</b> Impact of Missing Geo Values</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#language"><i class="fa fa-check"></i><b>4.3</b> Language</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-lang-values"><i class="fa fa-check"></i><b>4.3.1</b> Impact of Missing Lang Values</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="missing-values.html"><a href="missing-values.html#other-columns"><i class="fa fa-check"></i><b>4.4</b> Other Columns</a></li>
+<li class="chapter" data-level="4.5" data-path="missing-values.html"><a href="missing-values.html#number-of-tweets-cases-and-mobility-2"><i class="fa fa-check"></i><b>4.5</b> Number of tweets cases and mobility</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
-<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="conclusion.html"><a href="conclusion.html#number-of-tweets-cases-and-mobility-3"><i class="fa fa-check"></i><b>7.1</b> Number of tweets cases and mobility</a></li>
+<li class="chapter" data-level="7.2" data-path="conclusion.html"><a href="conclusion.html#congress-members-tweets-2"><i class="fa fa-check"></i><b>7.2</b> Congress Members Tweets</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -107,7 +142,20 @@
 <li><a href="https://ieee-dataport.org/open-access/coronavirus-covid-19-geo-tagged-tweets-dataset" class="uri">https://ieee-dataport.org/open-access/coronavirus-covid-19-geo-tagged-tweets-dataset</a></li>
 <li><a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide" class="uri">https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide</a></li>
 </ul>
+<div id="congress-members-tweets" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Congress Members Tweets</h2>
+<p>Since there are a lot of tweets and we don’t have a developer account such that we could retrieve millions of tweets successfully, we opted to get the most basic information for each tweet. We retrieved the user’s handle (i.e. username), the content of the tweet, geolocation data if any, the tweet id, and the language in which the tweet was written as determined by Twitter. If a language cannot be identified it is labeled as “und”. This label is a bit misleading at times, but this issue is discussed further in the Missing Data section of this report. We limited our search to tweets from handles according to (this)[<a href="https://github.com/unitedstates/congress-legislators/" class="uri">https://github.com/unitedstates/congress-legislators/</a>] dataset of Twitter handles for each congress member. We also limited our search to tweets from 12:00 AM UTC 2020 to 11:59 PM UTC 2020. These seemed like reasonable bounds since COVID-19 was particularly virulent in the year 2020 and the vaccine was not widely available before 2021 either. There were other features we could get from Twitter such as an entities object and sentiment analysis. We felt that the utility of these sentiments was not worth the extra time it would take to retrieve and parse through those fields. Moreover, we can still choose NLP models differing from those used by Twitter to extract information from tweet content. Thus extracting this information at the outset was not necessary, but comparing twitter sentiments and entities to those from other models could be useful in future work.</p>
+</div>
+<div id="googles-changes-in-mobility-data" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Google’s Changes in Mobility Data</h2>
+<p>There is not much we can change or alter about this dataset and it is quite robust. The gist of the dataset is that Google used it’s geolocation data from its various users and services to determine relative changes in mobility between categories of places. These categories include: Retail &amp; Recreation Grocery &amp; Pharmacy, Parks, Transit Stations, Workplaces, and Residential. Obviously, this is not a comprehensive list of all categories of places where people may congregate, but it is nonetheless a representative sample of places where we would expect a high volume of human traffic. Other places which are not included which could be useful to inquire about are large conventions. Even if they are less frequent, the high concentration of people and relative changes therein may have an outsized impact on COVID-19. This could be a useful follow-up to this project but separate data may need to be sourced or scraped from the web.</p>
+<!-- add df.head() for mobility data along with some summary statistics -->
+</div>
+<div id="number-of-tweets-cases-and-mobility" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Number of tweets cases and mobility</h2>
+<p>The data sources we used for this part were the ecdc dataset about the COVID-19 cases and deaths during 2020 and the twitter data. In the first case, we filtered the table just to include the USA data, so that we could have a table diplaying date, number of cases, and deaths for each day. To better compare our data, we just focused on the prevaccine covid situation, starting from the 4/1/2020 till around 12/15/2020. For the twitter data, we had to webscrape the parts that we needed. The original dataset had the top 1000 bigrams in terms of occurrence for each day . To ease up our processes we decided to include only the top 50 most used covid-related bigrams.Furthermore, we also used the mobility data for general USA overview, that was webscraped previously.</p>
 
+</div>
 </div>
             </section>
 
