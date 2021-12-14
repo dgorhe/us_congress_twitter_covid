@@ -27,18 +27,18 @@ tweets_with_mobility <- "https://us-congress-twitter-covid.s3.amazonaws.com/twee
 tweets <- read_csv(tweets_with_mobility)
 ```
 
-<!-- ![a](./nicolo_images/Cases_tweetcounts_timeseries.png) -->
-<!-- ![b](./nicolo_images/deaths_tweetcounts_correlation.png) -->
-<!-- ![c](./nicolo_images/deaths_tweets_timeseries_normalised) -->
+![a](./nicolo_images/Cases_tweetcounts_timeseries.png)
+![b](./nicolo_images/deaths_tweetcounts_correlation.png)
+![c](./nicolo_images/deaths_tweets_timeseries_normalised)
 
 If we take a look at our correlations coefficient we can see two different stories. When it comes to number of covid-related tweets in relation to the number of deaths we have low correlation . The correlation coefficient is this case is 0.21(corr2), which means there is a positive correlation. However if we take a look at the correlation test cortest2 we can see that the pvalue is 0.1951, hence even with a confidence level of 10% we cannot reject the null hypothesis that the correlation happened by chance.
 On the other hand, we can analyse our correlation of cases and number of tweets.In corr1 we have stored a correlation value of -0.48 and the associated pvalue is 0.0025, which means we can reject our null hypothesis and state that there is a correlation between the number of cases and number of tweets. 
 The surprising feature, is that the correlation is negative, where common sense may suggest there would be a positive correlation.In other words, we may expect, higher number of cases could trigger a higher number of people talking about it.
 The truth may be another one. We suspect that the real correlation may be linked to the dates itself. As we can see in the interval chart, we have that in the first 5 weeks (start date 4/1/2020), people were more scared and more prone to talk about it, then as the virus became usual among our lives, the covid tweets chat started to slowly but steadily decline. Even in the last part of the graph, when cases started taking off exponentially, the number of covid related tweets continued to slow.
 
-<!-- ![d](./nicolo_images/mobility_cases_correlation.png) -->
-<!-- ![e](./nicolo_images/tweetcounts_cases_correlation_weekly.png) -->
-<!-- ![f](./nicolo_images/tweetcounts_retailmobility_correlation.png) -->
+![d](./nicolo_images/mobility_cases_correlation.png)
+![e](./nicolo_images/tweetcounts_cases_correlation_weekly.png)
+![f](./nicolo_images/tweetcounts_retailmobility_correlation.png)
 
 We can observe that we have a negative correlation between the retail and recreation activity movement and the number of tweets. Which means that in general, the more tweet are written, the less mobility was experienced for the purposes aforementioned. The cause of this may rely in again more in the timeline of events. The biggest mobility changes may have occurred at the start of the pandemics in USA. Therefore,we know the highest number of tweets were at the start of (first 10 weeks). This fact coupled with the fact that either because people were more scared to go out, or either because some restricting policies were promoted; could be the reason of this negative correlation. This correlation has a very low p-value of 0.0118, hence we can again refuse the null hypothesis at a 2% confidence level. On the other hand, we cant make any assumption on the retail movement,because of the p-value.
 
