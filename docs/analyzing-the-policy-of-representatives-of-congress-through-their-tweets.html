@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Analyzing the policy of representatives of Congress through their tweets | US Congress - Tweets and COVID-19</title>
+  <meta name="description" content="Chapter 6 Analyzing the policy of representatives of Congress through their tweets | US Congress - Tweets and COVID-19" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Analyzing the policy of representatives of Congress through their tweets | US Congress - Tweets and COVID-19" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Analyzing the policy of representatives of Congress through their tweets | US Congress - Tweets and COVID-19" />
+  
+  
+  
+
+<meta name="author" content="Darvesh Gorhe, Thomas Holvoet, Nicolo Ricci" />
+
+
+<meta name="date" content="2021-12-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="results.html"/>
+<link rel="next" href="interactive-component.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/parallel-coordinates-2.1.8/parcoords.css" rel="stylesheet" />
+<script src="libs/parcoords-binding-1.0.0/parcoords.js"></script>
+<script src="libs/d3-5.16.0/d3.min.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">US Congress Tweet Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#congress-and-mobility"><i class="fa fa-check"></i><b>1.1</b> Congress and Mobility</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#congress-and-sentiment"><i class="fa fa-check"></i><b>1.2</b> Congress and Sentiment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#congress-members-tweets"><i class="fa fa-check"></i><b>2.1</b> Congress Members Tweets</a></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#googles-changes-in-mobility-data"><i class="fa fa-check"></i><b>2.2</b> Google’s Changes in Mobility Data</a></li>
+<li class="chapter" data-level="2.3" data-path="data-sources.html"><a href="data-sources.html#number-of-tweets-cases-and-mobility"><i class="fa fa-check"></i><b>2.3</b> Number of tweets cases and mobility</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#congress-members-tweets-1"><i class="fa fa-check"></i><b>3.1</b> Congress Members Tweets</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-transformation.html"><a href="data-transformation.html#tweet-cleaning-process"><i class="fa fa-check"></i><b>3.1.1</b> Tweet Cleaning Process</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-transformation.html"><a href="data-transformation.html#appending-zero-shot-classification-labels"><i class="fa fa-check"></i><b>3.1.2</b> Appending Zero Shot Classification Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#googles-changes-in-mobility-data-1"><i class="fa fa-check"></i><b>3.2</b> Google’s Changes in Mobility Data</a></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#number-of-tweets-cases-and-mobility-1"><i class="fa fa-check"></i><b>3.3</b> Number of tweets cases and mobility</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#excluding-tweet-content-from-missing-values"><i class="fa fa-check"></i><b>4.1</b> Excluding Tweet Content from Missing Values</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#geo"><i class="fa fa-check"></i><b>4.2</b> Geo</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-geo-values"><i class="fa fa-check"></i><b>4.2.1</b> Impact of Missing Geo Values</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#language"><i class="fa fa-check"></i><b>4.3</b> Language</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="missing-values.html"><a href="missing-values.html#impact-of-missing-lang-values"><i class="fa fa-check"></i><b>4.3.1</b> Impact of Missing Lang Values</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="missing-values.html"><a href="missing-values.html#other-columns"><i class="fa fa-check"></i><b>4.4</b> Other Columns</a></li>
+<li class="chapter" data-level="4.5" data-path="missing-values.html"><a href="missing-values.html#number-of-tweets-cases-and-mobility-2"><i class="fa fa-check"></i><b>4.5</b> Number of tweets cases and mobility</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#covid-vs.-mobility"><i class="fa fa-check"></i><b>5.1</b> COVID vs. Mobility</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"><a href="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"><i class="fa fa-check"></i><b>6</b> Analyzing the policy of representatives of Congress through their tweets</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"><a href="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html#extracting-the-data"><i class="fa fa-check"></i><b>6.1</b> Extracting the data</a></li>
+<li class="chapter" data-level="6.2" data-path="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html"><a href="analyzing-the-policy-of-representatives-of-congress-through-their-tweets.html#patterns-in-policy"><i class="fa fa-check"></i><b>6.2</b> Patterns in policy</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>7</b> Interactive component</a></li>
+<li class="chapter" data-level="8" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>8</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="conclusion.html"><a href="conclusion.html#number-of-tweets-cases-and-mobility-3"><i class="fa fa-check"></i><b>8.1</b> Number of tweets cases and mobility</a></li>
+<li class="chapter" data-level="8.2" data-path="conclusion.html"><a href="conclusion.html#congress-members-tweets-2"><i class="fa fa-check"></i><b>8.2</b> Congress Members Tweets</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">US Congress - Tweets and COVID-19</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analyzing-the-policy-of-representatives-of-congress-through-their-tweets" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Analyzing the policy of representatives of Congress through their tweets</h1>
+<div id="extracting-the-data" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Extracting the data</h2>
+<p>We now have a look at what COVID-related policies the representatives of US Congress tweet about, and how they feel about those. To this end, we collected a dataset of all tweets from the representatives in the year 2020 as described in section 2. We captured the sentiment of these tweets through a Natural Language Processing model that gave each tweet a ‘positive’ and a ‘negative’ score. We elaborated on this in section 3.</p>
+<p>Over the course of the pandemic, numerous ways have been suggested to <em>flatten the curve</em>. We summarize them into 5 categories: vaccination, testing, lockdown, face masks, and social distancing. For each category a number of keywords is specified:</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="83%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Policy</th>
+<th>Keywords</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vaccination</td>
+<td>vaccination, vaccinated, vaccine</td>
+</tr>
+<tr class="even">
+<td>Testing</td>
+<td>testing, gettested, tested, PCR</td>
+</tr>
+<tr class="odd">
+<td>Lockdown</td>
+<td>lockdown, quarantine, quarantining</td>
+</tr>
+<tr class="even">
+<td>Face masks</td>
+<td>mask, face covering, face cover, masking, facemask</td>
+</tr>
+<tr class="odd">
+<td>Social distancing</td>
+<td>social distancing, socialdistancing, safe distance, physical distancing, 6 feet apart, 6feetapart</td>
+</tr>
+</tbody>
+</table>
+<p>As such, each tweet can be classified as ‘related’ to a certain policy by checking if it contains any of these keywords.</p>
+</div>
+<div id="patterns-in-policy" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Patterns in policy</h2>
+<p>In the media, it is clear that politicians’ preferences for these policies largely differ. We try to find patterns in these preferences by firstly looking at the frequency in tweets related to these policies. In the parallel coordinate plot below, every line represents a member of Congress, the values correspond to the frequency of their tweets related to a certain policy.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>We notice some interesting patterns here. Overall it is clear that democrats tweet more frequently about testing and masking up as preventive measures. Interestingly, there appears to be an inverse relationship between the tweet frequency on masks and social distancing. Some members of congress focus on masking up, whereas others shift their focus to social distancing as a way of slowing the spread of the virus. We can also see that few republicans tweet about masking up as a preventive measure, however, there is a significant fraction of republicans that do tweet about social distancing and testing in the battle against COVID. Though, the most frequent tweeters on social distancing are democrat.</p>
+<p>Perhaps the most surprising insight in this graph is that a lockdown is more frequently discussed by republicans. We can see that not many democrats tweet about this, they resort to other policies. There are even some outliers among the republicans that tweet very frequently about a lockdown. Taking into account the media coverage over the past year this is rather surprising as the republican party generally advocated for opening up the country. The question remains whether these republicans are actually promoting or contesting a potential lockdown.</p>
+<p>The sentiment analysis sheds some light on this. For every tweet we have a ‘positive’ and a ‘negative’ score provided by the NLP model. In the plot below we visualize the average ‘positiveness’ of tweets for every policy category, per party. This ‘positiveness’ is defined as the ratio of the average positive score for tweets related to a policy to the average score of tweets not related to this policy. A score &gt; 1 indicates that tweets on a certain policy are generally more positive. A ‘positiveness’ &lt; 1 indicates a rather negative sentiment towards this policy.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>For all policy categories except ‘lockdown’, the sentiment is about the same for both parties. However, a lockdown is contentious. There is a clear negative sentiment of republicans towards a lockdown, whereas for democrats a lockdown is percepted more positive than other measures. Republican representative <span class="citation">@RepDanCrenshaw</span> is the furthest outlier on the lockdown scale. His tweets indeed show a very negative sentiment towards a lockdown:</p>
+<pre><code>## [1] &quot;Speaker Pelosi holds COVID relief hostage while people in her state suffer under Democrat lockdowns.The lockdowns need to stop. Pelosi’s political games need to stop.All of these so-called “leaders” need to put the country first for once. https://t.co/V8PPpBnv7L&quot;                                    
+## [2] &quot;Gov. Cuomo incessantly lectures and criticizes GOP governors for loosening lockdowns to save livelihoods. And much of the media lets him get away with it.But we can’t ignore his disastrous decisions that led to 32000 people dying and the exact spike experts warned us about. https://t.co/OJ2buRjB4R&quot;
+## [3] &quot;“We have to live with the virus risks while fortifying the health system and protecting the most vulnerable.”This is exactly right. We can’t allow fear-mongers to use new cases to push for new lockdowns. We can trust Americans to understand the risks and safely reopen. https://t.co/iuEVjtURRY&quot;     
+## [4] &quot;“The same states that are loudest in demanding a federal rescue have hurt themselves the most with long strict lockdowns and tax-and-spend policies.”Spot on from @WSJopinion. The left is also the loudest in shaming red states for reopening and getting people back to work. https://t.co/PPJSQj0RK4&quot;  
+## [5] &quot;RT @HouseCommerce: Spread the word that a national quarantine is not real. Be sure to follow @CDCgov for accurate and most up-to-date info…&quot;</code></pre>
+<p>We compare his sentiment profile to that to one of the democrats from the cluster that promotes social distancing the most: <span class="citation">@RepKathleenRice</span>.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Although the democrat representative <span class="citation">@RepKathleenRice</span> is significantly less vocal about a lockdown, her tweets on the matter are convincingly positive. <span class="citation">@RepDanCrenshaw</span>’s is relatively pessimistic. He clearly prefers social distancing and vaccination as opposed to masking up and a lockdown.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interactive-component.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dgorhe/us_congress_twitter_covid/edit/main/05-results.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/dgorhe/us_congress_twitter_covid/blob/main/05-results.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
