@@ -21,7 +21,7 @@ pkg_check("vcd")
 library(ggmosaic)
 
 # Original file (101 mb)
-tweets_with_mobility <- "/Users/darvesh/Programming/R/fall2021/gr5702/us_congress_twitter_covid/data/created/tweets_yearly_mobility_data.csv"
+tweets_with_mobility <- "https://us-congress-twitter-covid.s3.amazonaws.com/tweets_yearly_mobility_data.csv"
 tweets <- read_csv(tweets_with_mobility)
 ```
 

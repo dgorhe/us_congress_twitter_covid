@@ -119,7 +119,7 @@ plot_missing_parameters <- function(data, counts) {
 
 ```{r}
 # Importing Twitter Data
-congress <- read_csv("congress_tweets.csv", col_names = FALSE)
+congress <- read_csv("https://us-congress-twitter-covid.s3.amazonaws.com/congress_tweets.csv", col_names = FALSE)
 colnames(congress) <- c("twitter_handle", "tweet_content", "tweet_id", "geo", "lang")
 congress_no_content <- congress[, c("twitter_handle", "tweet_id", "geo", "lang")]
 congress_no_content$geo[congress_no_content$geo == "None"] <- NA
