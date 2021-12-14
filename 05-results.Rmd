@@ -1,31 +1,175 @@
 # Results
 ```{r loading, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-pkg_check <- function(pkg) {
-  if (!require(pkg, character.only = TRUE)) {
-    install.packages(pkg, dependencies = TRUE)
-  }
-}
-
-pkg_check("tidyverse")
-pkg_check("ggplot2")
-pkg_check("tidyr")
-pkg_check("dplyr")
-pkg_check("knitr")
-pkg_check("gridExtra")
-pkg_check("tibble")
-pkg_check("GGally")
-pkg_check("parcoords")
-pkg_check("vcd")
-pkg_check("ggmosaic")
-pkg_check("tidyverse")
-pkg_check("ggridges")
-
-# Original file (101 mb)
-tweets_with_mobility <- "https://us-congress-twitter-covid.s3.amazonaws.com/tweets_yearly_mobility_data.csv"
-tweets <- read_csv(tweets_with_mobility)
+# knitr::opts_chunk$set(echo = TRUE)
+# 
+# pkg_check <- function(pkg) {
+#   if (!require(pkg, character.only = TRUE)) {
+#     install.packages(pkg, dependencies = TRUE)
+#   }
+# }
+# 
+# pkg_check("tidyverse")
+# pkg_check("ggplot2")
+# pkg_check("tidyr")
+# pkg_check("dplyr")
+# pkg_check("knitr")
+# pkg_check("gridExtra")
+# pkg_check("tibble")
+# pkg_check("GGally")
+# pkg_check("parcoords")
+# pkg_check("vcd")
+# pkg_check("ggmosaic")
+# pkg_check("tidyverse")
+# pkg_check("ggridges")
+# 
+# # Original file (101 mb)
+# tweets_with_mobility <- "https://us-congress-twitter-covid.s3.amazonaws.com/tweets_yearly_mobility_data.csv"
+# tweets <- read_csv(tweets_with_mobility)
+# ```
+# 
+# <!-- Nicolo's Code START -->
+# ```{r}
+# # we filter the dataset to include only USA, this is because we are assuming that the majority of the english language tweets we are dealing are coming from USA.
+# # In data we are storing the data coming from https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
+# #which is recording the number of cases and deaths ion every day of 2020 by country.
+# 
+# # Ignoring
+# # testdata<-data[data$countryterritoryCode=='USA',]
+# 
+# #We are going to aggregate our values, in ciao1 we have the top 50 bigrams in tweets for each day. So in this case we are grouping the tweets by each day, so that we have a table showing year,month, day and the total number of Covid-related bigrams. We focused on bigrams so we can catch the combination COVID 19 among others
+# 
+# ciao1_mod<-aggregate(ciao1$counts,by=list(ciao1$year,ciao1$month,ciao1$day),FUN=sum)
+# #we are going to change the column's name (apparently when aggregating we are losing the columns names)
+# colnames(ciao1_mod)[1]<-'year'
+# colnames(ciao1_mod)[2]<-'month'
+# colnames(ciao1_mod)[3]<-'day'
+# colnames(ciao1_mod)[4]<-'tweet_counts'
+# 
+# #We are going to order our data by date, so we will be able to use a function to get rid of the dates and just use a common column called interval, so that we will be able to test our correlation between different spans of time
+# #We are going to order both cases and deaths, and tweets by their date
+# df3<-testdata[order(testdata$year,testdata$month,testdata$day), ]
+# df3 %>% map_df(rev)
+# ciao1_mod3<-ciao1_mod[order(ciao1_mod$year,ciao1_mod$month,ciao1_mod$day),]
+# ciao1_mod3 %>% map_df(rev)
+# #We are going to create a column interval, so that we can geet rid of the dates and ease up the merging of different tables and for now we set it to 0
+# ciao1_mod3$interval=0
+# df3$interval=0
+# #Now we are going to align the two tables so to have similar periods of time for our analysis. For this purpose we are going to consider the period from 04/1/2021 to the day 12/14/2021 which is the last one in one of the two tables
+# #To do that we filter our rows in that specific period
+# df3<-df3[df3$month>=4 & df3$year==2020,]
+# ciao1_mod3<-ciao1_mod3[ciao1_mod3$month>=4 & ciao1_mod3$year==2020,]
+# #We find out that the cases and deaths df is only till 12/14/2020 but the tweets is to 12/30 so we are going to eliminate the last 16 rows in our tweets df
+# n<-dim(ciao1_mod3)[1]
+# ciao1_mod3<-ciao1_mod3[1:(n-16),]
+# #We obtained the two datasets cleaned and parsed, the next styep would be to implement a function to create intervals
+# # Instead of having dates, we are going to pass a parameter k and divide the days we had into intervals
+# 
+# ```
+# ```{r}
+# #We decided that 7 days would be a nice interval to keep, it means we are going to conduct our correlation weekly. Of course we could change k to 14
+# k<-7
+# do_interval<-function(df,interval){
+#   # we are going to start numerating it from 1 cause we need to create a new column
+#   c=1
+# for (row in 1:nrow(df)){
+#     df[row,'interval']<- floor(c/interval)+1
+#   
+# #We increase our counter and divide by the interval parameter so that for each day we have the correspondant interval in a separeted column
+# c=c+1
+# }
+#  #here we are going to aggregate the cases, deaths or other metrics based on the intervals
+#   #The conditions that we put on the number of columns is used to differentiate the different data sets that we are going to pass. 
+#   if (ncol(df)>6){
+#     
+#     if(ncol(df)<14 & ncol(df)!=10){
+#     # We are in the cases and deaths table here
+#     #summing the variables on grouping by the interval
+# df<-aggregate(cbind(df$cases,df$deaths),by=list(df$interval),FUN=sum)
+# colnames(df)[1]<-'interval'
+# colnames(df)[2]<-'cases'
+# colnames(df)[3]<-'deaths'
+#     }else{
+#   #we are in the travel table here
+#   df<-aggregate(cbind(df[c(1:6)]),by=list(df$interval),FUN=sum)
+#   colnames(df)[1]<-'interval'
+# }
+# }else{
+#   #we are in the tweet counts table here
+#   df<-aggregate(df$tweet_counts,by=list(df$interval),FUN=sum)
+#   colnames(df)[1]<-'interval'
+#   colnames(df)[2]<-'tweet_counts'
+#   }
+#   return(df)
+# }
+# df31<-do_interval(df3,k)
+# df32<-do_interval(ciao1_mod3,k)
+# # we are going to merge by our interval, so then we can calculate correlation and plot the scatterplot and the best fitting line.
+# df3_final<-merge(df31,df32,by=c('interval'))
+# corr1<-cor(df3_final$cases, df3_final$tweet_counts)
+# cortest1<-cor.test(df3_final$cases, df3_final$tweet_counts)
+# corr2<-cor(df3_final$deaths, df3_final$tweet_counts)
+# cortest2<-cor.test(df3_final$deaths, df3_final$tweet_counts)
+# ggplot(df3_final, aes(x = deaths, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm)
+# ggplot(df3_final, aes(x = cases, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='red') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm)
+# #visualizing the time series of the cases 
+# ggplot(df3_final,aes(x=interval))+ geom_line(aes(y=cases),size = 0.5, alpha = 0.3, col='red') + geom_line(aes(y=tweet_counts),size = 0.5, alpha = 0.3, col='blue')+scale_x_continuous(labels = scales::comma)+xlab('week')+ylab('Cases and tweet counts')
+# # we decided to divide by the average so to normalize our results and have a sense of what the correlation is
+# # in this case, the y axis is not useful, but we just observe the patterns
+# ggplot(df3_final,aes(x=interval))+ geom_line(aes(y=deaths/mean(deaths)),size = 0.5, alpha = 0.3, col='red') + geom_line(aes(y=tweet_counts/mean(tweet_counts)),size = 0.5, alpha = 0.3, col='blue')+scale_x_continuous(labels = scales::comma)+xlab('week')+ylab('Proportions of deaths and tweet counts')
+# ```
+# Observations. If we take a look at our correlations coefficient we can see two different stories. When it comes to number of covid-related tweets in relation to the number of deaths we have low correlation . The correlation coefficient is this case is 0.21(corr2), which means there is a positive correlation. However if we take a look at the correlation test cortest2 we can see that the pvalue is 0.1951, hence even with a confidence level of 10% we cannot reject the null hypothesis that the correlation happened by chance.
+# On the other hand, we can analyse our correlation of cases and number of tweets.In corr1 we have stored a correlation value of -0.48 and the associated pvalue is 0.0025, which means we can reject our null hypothesis and state that there is a correlation between the number of cases and number of tweets. 
+# The surprising feature, is that the correlation is negative, where common sense may suggest there would be a positive correlation.In other words, we may expect, higher number of cases could trigger a higher number of people talking about it.
+# The truth may be another one. We suspect that the real correlation may be linked to the dates itself. As we can see in the interval chart, we have that in the first 5 weeks (start date 4/1/2020), people were more scared and more prone to talk about it, then as the virus became usual among our lives, the covid tweets chat started to slowly but steadily decline. Even in the last part of the graph, when cases started taking off exponentially, the number of covid related tweets continued to slow.  
+# 
+# ```{r}
+# # In movements we have the changing for percentage of transit of people in comparison to same period of time in 2019in the whole USA
+# dfmove<-Movements
+# # We have to convert the dates that we have in a more suitable format so that we can use the comparison to other dfs
+# for (row in 1:nrow(dfmove)){
+#   
+#     date<-dfmove[row,'date']
+#     arr<-strsplit(date,split='-')
+#     dfmove[row,'year']=(arr[[1]][1])
+#     dfmove[row,'month']=(arr[[1]][2])
+#     dfmove[row,'day']=(arr[[1]][3])
+#    # dfmove[row,'day']=strtoi(arr[[1]][3])
+# }
+# 
+# dfmove$year<-as.integer(dfmove$year)
+# dfmove$month<-as.integer(dfmove$month)
+# dfmove$day<-as.integer(dfmove$day)
+# dfmove<-dfmove[dfmove$month>=4 & dfmove$year==2020,]
+# n<-dim(dfmove)[1]
+# dfmove<-dfmove[1:(n-18),]
+# # we are going to get the columns that we need, cleaning the data from useless columns
+# dfmove$interval<-0
+# dfmove<-dfmove[c(10:19)]
+# #We order them by the date so we can use the function do_interval and compare the results
+# dfmove<-dfmove[order(dfmove$year,dfmove$month,dfmove$day),]
+# dfmove %>% map_df(rev)
+# dfmovem<-do_interval(dfmove,k)
+# #To have the correct change over the period, we are going to divide the columns by the period
+# 
+# dfmovem[2:7]<-dfmovem[,2:7]/k
+# 
+# df4final<-merge(dfmovem,df32,by=c('interval'))
+# df4final1<-merge(dfmovem,df31,by=c('interval'))
+# #We set a parameter so that we can easily change for our visualization
+# x1<-df4final$retail_and_recreation_percent_change_from_baseline
+# corr41<-cor(x1, df4final$tweet_counts)
+# cortest41<-cor.test(x1, df4final$tweet_counts)
+# corr42<-cor(x1, df4final1$cases)
+# cortest42<-cor.test(x1, df4final1$cases)
+# ggplot(df4final, aes(x = x1, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm)
+# ggplot(df4final1, aes(x=df4final1$cases, y = x1)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm)
+# #create a ridgepllot with the different 
+# #pivoted<-pivot_longer(df4final,cols = #c(df4final$retail_and_recreation_percent_change_from_baseline,df4final$grocery_and_pharmacy_percent_change_from_basel#ine,df4final$parks_percent_change_from_baseline,df4final$transit_stations_percent_change_from_baseline,df4final$workp#laces_percent_change_from_baseline,df4final$residential_percent_change_from_baseline),names_to = 'type',values_to = #'vals')
 ```
+<!-- Nicolo's Code END -->
+
+
+
 
 ![a](./nicolo_images/Cases_tweetcounts_timeseries.png)
 ![b](./nicolo_images/deaths_tweetcounts_correlation.png)

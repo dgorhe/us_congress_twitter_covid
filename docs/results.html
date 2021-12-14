@@ -148,6 +148,7 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
+<!-- Nicolo's Code END -->
 <p><img src="nicolo_images/Cases_tweetcounts_timeseries.png" alt="a" />
 <img src="nicolo_images/deaths_tweetcounts_correlation.png" alt="b" />
 <img src="./nicolo_images/deaths_tweets_timeseries_normalised" alt="c" /></p>
@@ -213,11 +214,11 @@ While it is no surprise that vaccines, testing, and masks were included among th
 <div id="patterns-in-policy" class="section level3" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> Patterns in policy</h3>
 <p>In the media, it is clear that politicians’ preferences for these policies largely differ. We try to find patterns in these preferences by firstly looking at the frequency in tweets related to these policies. In the parallel coordinate plot below, every line represents a member of Congress, the values correspond to the frequency of their tweets related to a certain policy.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>We notice some interesting patterns here. Overall it is clear that democrats tweet more frequently about testing and masking up as preventive measures. Interestingly, there appears to be an inverse relationship between the tweet frequency on masks and social distancing. Some members of congress focus on masking up, whereas others shift their focus to social distancing as a way of slowing the spread of the virus. We can also see that few republicans tweet about masking up as a preventive measure, however, there is a significant fraction of republicans that do tweet about social distancing and testing in the battle against COVID. Though, the most frequent tweeters on social distancing are democrat.</p>
 <p>Perhaps the most surprising insight in this graph is that a lockdown is more frequently discussed by republicans. We can see that not many democrats tweet about this, they resort to other policies. There are even some outliers among the republicans that tweet very frequently about a lockdown. Taking into account the media coverage over the past year this is rather surprising as the republican party generally advocated for opening up the country. The question remains whether these republicans are actually promoting or contesting a potential lockdown.</p>
 <p>The sentiment analysis sheds some light on this. For every tweet we have a ‘positive’ and a ‘negative’ score provided by the NLP model. In the plot below we visualize the average ‘positiveness’ of tweets for every policy category, per party. This ‘positiveness’ is defined as the ratio of the average positive score for tweets related to a policy to the average score of tweets not related to this policy. A score &gt; 1 indicates that tweets on a certain policy are generally more positive. A ‘positiveness’ &lt; 1 indicates a rather negative sentiment towards this policy.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>For all policy categories except ‘lockdown’, the sentiment is about the same for both parties. However, a lockdown is contentious. There is a clear negative sentiment of republicans towards a lockdown, whereas for democrats a lockdown is percepted more positive than other measures. Republican representative <span class="citation">@RepDanCrenshaw</span> is the furthest outlier on the lockdown scale. His tweets indeed show a very negative sentiment towards a lockdown:</p>
 <pre><code>## [1] &quot;Speaker Pelosi holds COVID relief hostage while people in her state suffer under Democrat lockdowns.The lockdowns need to stop. Pelosi’s political games need to stop.All of these so-called “leaders” need to put the country first for once. https://t.co/V8PPpBnv7L&quot;                                    
 ## [2] &quot;Gov. Cuomo incessantly lectures and criticizes GOP governors for loosening lockdowns to save livelihoods. And much of the media lets him get away with it.But we can’t ignore his disastrous decisions that led to 32000 people dying and the exact spike experts warned us about. https://t.co/OJ2buRjB4R&quot;
@@ -225,7 +226,7 @@ While it is no surprise that vaccines, testing, and masks were included among th
 ## [4] &quot;“The same states that are loudest in demanding a federal rescue have hurt themselves the most with long strict lockdowns and tax-and-spend policies.”Spot on from @WSJopinion. The left is also the loudest in shaming red states for reopening and getting people back to work. https://t.co/PPJSQj0RK4&quot;  
 ## [5] &quot;RT @HouseCommerce: Spread the word that a national quarantine is not real. Be sure to follow @CDCgov for accurate and most up-to-date info…&quot;</code></pre>
 <p>We compare his sentiment profile to that to one of the democrats from the cluster that promotes social distancing the most: <span class="citation">@RepKathleenRice</span>.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>Although the democrat representative <span class="citation">@RepKathleenRice</span> is significantly less vocal about a lockdown, her tweets on the matter are convincingly positive. <span class="citation">@RepDanCrenshaw</span>’s is relatively pessimistic. He clearly prefers social distancing and vaccination as opposed to masking up and a lockdown.</p>
 
 </div>
