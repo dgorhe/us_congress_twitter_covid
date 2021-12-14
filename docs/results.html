@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="missing-values.html"/>
-<link rel="next" href="section.html"/>
+<link rel="next" href="interactive-component.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -112,29 +112,20 @@
 <li class="chapter" data-level="4.4" data-path="missing-values.html"><a href="missing-values.html#other-columns"><i class="fa fa-check"></i><b>4.4</b> Other Columns</a></li>
 <li class="chapter" data-level="4.5" data-path="missing-values.html"><a href="missing-values.html#number-of-tweets-cases-and-mobility-2"><i class="fa fa-check"></i><b>4.5</b> Number of tweets cases and mobility</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
-<li class="chapter" data-level="6" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>6</b> <!-- Nicolo's Code START --></a></li>
-<li class="chapter" data-level="7" data-path="r-we-filter-the-dataset-to-include-only-usa-this-is-because-we-are-assuming-that-the-majority-of-the-english-language-tweets-we-are-dealing-are-coming-from-usa.-in-data-we-are-storing-the-data-coming-from-httpswww.ecdc.europa.euenpublications-datadownload-todays-data-geographic-distribution-covid-19-cases-worldwide-which-is-recording-the-number-of-cases-and-deaths-ion-every-day-of-2020-by-country.-ignoring-testdata-datadatacountryterritorycodeusa-we-are-going-to-aggregate-our-values-in-ciao1-we-have-the-top-50-bigrams-in-tweets-for-each-day.-so-in-this-case-we-are-grouping-the-tweets-by-each-day-so-that-we-have-a-table-showing-yearmonth-day-and-the-total-number-of-covid-related-bigrams.-we-focused-on-bigrams-so-we-can-catch-the-combination-covid-19-among-others-ciao1_mod-aggregateciao1countsbylistciao1yearciao1monthciao1dayfunsum-we-are-going-to-change-the-columns-name-apparently-when-aggregating-we-are-losing-the-columns-names-colnamesciao1_mod1-year-colnamesciao1_mod2-month-colnamesciao1_mod3-day-colnamesc"><a href="r-we-filter-the-dataset-to-include-only-usa-this-is-because-we-are-assuming-that-the-majority-of-the-english-language-tweets-we-are-dealing-are-coming-from-usa.-in-data-we-are-storing-the-data-coming-from-httpswww.ecdc.europa.euenpublications-datadownload-todays-data-geographic-distribution-covid-19-cases-worldwide-which-is-recording-the-number-of-cases-and-deaths-ion-every-day-of-2020-by-country.-ignoring-testdata-datadatacountryterritorycodeusa-we-are-going-to-aggregate-our-values-in-ciao1-we-have-the-top-50-bigrams-in-tweets-for-each-day.-so-in-this-case-we-are-grouping-the-tweets-by-each-day-so-that-we-have-a-table-showing-yearmonth-day-and-the-total-number-of-covid-related-bigrams.-we-focused-on-bigrams-so-we-can-catch-the-combination-covid-19-among-others-ciao1_mod-aggregateciao1countsbylistciao1yearciao1monthciao1dayfunsum-we-are-going-to-change-the-columns-name-apparently-when-aggregating-we-are-losing-the-columns-names-colnamesciao1_mod1-year-colnamesciao1_mod2-month-colnamesciao1_mod3-day-colnamesc"><i class="fa fa-check"></i><b>7</b> <code>{r} # # we filter the dataset to include only USA, this is because we are assuming that the majority of the english language tweets we are dealing are coming from USA. # # In data we are storing the data coming from https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide # #which is recording the number of cases and deaths ion every day of 2020 by country. #  # # Ignoring # # testdata&lt;-data[data$countryterritoryCode=='USA',] #  # #We are going to aggregate our values, in ciao1 we have the top 50 bigrams in tweets for each day. So in this case we are grouping the tweets by each day, so that we have a table showing year,month, day and the total number of Covid-related bigrams. We focused on bigrams so we can catch the combination COVID 19 among others #  # ciao1_mod&lt;-aggregate(ciao1$counts,by=list(ciao1$year,ciao1$month,ciao1$day),FUN=sum) # #we are going to change the column's name (apparently when aggregating we are losing the columns names) # colnames(ciao1_mod)[1]&lt;-'year' # colnames(ciao1_mod)[2]&lt;-'month' # colnames(ciao1_mod)[3]&lt;-'day' # colnames(ciao1_mod)[4]&lt;-'tweet_counts' #  # #We are going to order our data by date, so we will be able to use a function to get rid of the dates and just use a common column called interval, so that we will be able to test our correlation between different spans of time # #We are going to order both cases and deaths, and tweets by their date # df3&lt;-testdata[order(testdata$year,testdata$month,testdata$day), ] # df3 %&gt;% map_df(rev) # ciao1_mod3&lt;-ciao1_mod[order(ciao1_mod$year,ciao1_mod$month,ciao1_mod$day),] # ciao1_mod3 %&gt;% map_df(rev) # #We are going to create a column interval, so that we can geet rid of the dates and ease up the merging of different tables and for now we set it to 0 # ciao1_mod3$interval=0 # df3$interval=0 # #Now we are going to align the two tables so to have similar periods of time for our analysis. For this purpose we are going to consider the period from 04/1/2021 to the day 12/14/2021 which is the last one in one of the two tables # #To do that we filter our rows in that specific period # df3&lt;-df3[df3$month&gt;=4 &amp; df3$year==2020,] # ciao1_mod3&lt;-ciao1_mod3[ciao1_mod3$month&gt;=4 &amp; ciao1_mod3$year==2020,] # #We find out that the cases and deaths df is only till 12/14/2020 but the tweets is to 12/30 so we are going to eliminate the last 16 rows in our tweets df # n&lt;-dim(ciao1_mod3)[1] # ciao1_mod3&lt;-ciao1_mod3[1:(n-16),] # #We obtained the two datasets cleaned and parsed, the next styep would be to implement a function to create intervals # # Instead of having dates, we are going to pass a parameter k and divide the days we had into intervals #  #</code></a></li>
-<li class="chapter" data-level="8" data-path="r-we-decided-that-7-days-would-be-a-nice-interval-to-keep-it-means-we-are-going-to-conduct-our-correlation-weekly.-of-course-we-could-change-k-to-14-k-7-do_interval-functiondfinterval-we-are-going-to-start-numerating-it-from-1-cause-we-need-to-create-a-new-column-c1-for-row-in-1nrowdf-dfrowinterval--floorcinterval1-we-increase-our-counter-and-divide-by-the-interval-parameter-so-that-for-each-day-we-have-the-correspondant-interval-in-a-separeted-column-cc1-here-we-are-going-to-aggregate-the-cases-deaths-or-other-metrics-based-on-the-intervals-the-conditions-that-we-put-on-the-number-of-columns-is-used-to-differentiate-the-different-data-sets-that-we-are-going-to-pass.-if-ncoldf6-ifncoldf14-ncoldf10-we-are-in-the-cases-and-deaths-table-here-summing-the-variables-on-grouping-by-the-interval-df-aggregatecbinddfcasesdfdeathsbylistdfintervalfunsum-colnamesdf1-interval-colnamesdf2-cases-colnamesdf3-deaths-else-we-are-in-the-travel-table-here-df-aggregatecbinddfc16bylistdfintervalfunsum-colnamesdf1-interval-else-we-"><a href="r-we-decided-that-7-days-would-be-a-nice-interval-to-keep-it-means-we-are-going-to-conduct-our-correlation-weekly.-of-course-we-could-change-k-to-14-k-7-do_interval-functiondfinterval-we-are-going-to-start-numerating-it-from-1-cause-we-need-to-create-a-new-column-c1-for-row-in-1nrowdf-dfrowinterval--floorcinterval1-we-increase-our-counter-and-divide-by-the-interval-parameter-so-that-for-each-day-we-have-the-correspondant-interval-in-a-separeted-column-cc1-here-we-are-going-to-aggregate-the-cases-deaths-or-other-metrics-based-on-the-intervals-the-conditions-that-we-put-on-the-number-of-columns-is-used-to-differentiate-the-different-data-sets-that-we-are-going-to-pass.-if-ncoldf6-ifncoldf14-ncoldf10-we-are-in-the-cases-and-deaths-table-here-summing-the-variables-on-grouping-by-the-interval-df-aggregatecbinddfcasesdfdeathsbylistdfintervalfunsum-colnamesdf1-interval-colnamesdf2-cases-colnamesdf3-deaths-else-we-are-in-the-travel-table-here-df-aggregatecbinddfc16bylistdfintervalfunsum-colnamesdf1-interval-else-we-"><i class="fa fa-check"></i><b>8</b> <code>{r} # #We decided that 7 days would be a nice interval to keep, it means we are going to conduct our correlation weekly. Of course we could change k to 14 # k&lt;-7 # do_interval&lt;-function(df,interval){ #   # we are going to start numerating it from 1 cause we need to create a new column #   c=1 # for (row in 1:nrow(df)){ #     df[row,'interval']&lt;- floor(c/interval)+1 #    # #We increase our counter and divide by the interval parameter so that for each day we have the correspondant interval in a separeted column # c=c+1 # } #  #here we are going to aggregate the cases, deaths or other metrics based on the intervals #   #The conditions that we put on the number of columns is used to differentiate the different data sets that we are going to pass.  #   if (ncol(df)&gt;6){ #      #     if(ncol(df)&lt;14 &amp; ncol(df)!=10){ #     # We are in the cases and deaths table here #     #summing the variables on grouping by the interval # df&lt;-aggregate(cbind(df$cases,df$deaths),by=list(df$interval),FUN=sum) # colnames(df)[1]&lt;-'interval' # colnames(df)[2]&lt;-'cases' # colnames(df)[3]&lt;-'deaths' #     }else{ #   #we are in the travel table here #   df&lt;-aggregate(cbind(df[c(1:6)]),by=list(df$interval),FUN=sum) #   colnames(df)[1]&lt;-'interval' # } # }else{ #   #we are in the tweet counts table here #   df&lt;-aggregate(df$tweet_counts,by=list(df$interval),FUN=sum) #   colnames(df)[1]&lt;-'interval' #   colnames(df)[2]&lt;-'tweet_counts' #   } #   return(df) # } # df31&lt;-do_interval(df3,k) # df32&lt;-do_interval(ciao1_mod3,k) # # we are going to merge by our interval, so then we can calculate correlation and plot the scatterplot and the best fitting line. # df3_final&lt;-merge(df31,df32,by=c('interval')) # corr1&lt;-cor(df3_final$cases, df3_final$tweet_counts) # cortest1&lt;-cor.test(df3_final$cases, df3_final$tweet_counts) # corr2&lt;-cor(df3_final$deaths, df3_final$tweet_counts) # cortest2&lt;-cor.test(df3_final$deaths, df3_final$tweet_counts) # ggplot(df3_final, aes(x = deaths, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm) # ggplot(df3_final, aes(x = cases, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='red') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm) # #visualizing the time series of the cases  # ggplot(df3_final,aes(x=interval))+ geom_line(aes(y=cases),size = 0.5, alpha = 0.3, col='red') + geom_line(aes(y=tweet_counts),size = 0.5, alpha = 0.3, col='blue')+scale_x_continuous(labels = scales::comma)+xlab('week')+ylab('Cases and tweet counts') # # we decided to divide by the average so to normalize our results and have a sense of what the correlation is # # in this case, the y axis is not useful, but we just observe the patterns # ggplot(df3_final,aes(x=interval))+ geom_line(aes(y=deaths/mean(deaths)),size = 0.5, alpha = 0.3, col='red') + geom_line(aes(y=tweet_counts/mean(tweet_counts)),size = 0.5, alpha = 0.3, col='blue')+scale_x_continuous(labels = scales::comma)+xlab('week')+ylab('Proportions of deaths and tweet counts') #</code></a></li>
-<li class="chapter" data-level="9" data-path="observations.-if-we-take-a-look-at-our-correlations-coefficient-we-can-see-two-different-stories.-when-it-comes-to-number-of-covid-related-tweets-in-relation-to-the-number-of-deaths-we-have-low-correlation-.-the-correlation-coefficient-is-this-case-is-0.21corr2-which-means-there-is-a-positive-correlation.-however-if-we-take-a-look-at-the-correlation-test-cortest2-we-can-see-that-the-pvalue-is-0.1951-hence-even-with-a-confidence-level-of-10-we-cannot-reject-the-null-hypothesis-that-the-correlation-happened-by-chance..html"><a href="observations.-if-we-take-a-look-at-our-correlations-coefficient-we-can-see-two-different-stories.-when-it-comes-to-number-of-covid-related-tweets-in-relation-to-the-number-of-deaths-we-have-low-correlation-.-the-correlation-coefficient-is-this-case-is-0.21corr2-which-means-there-is-a-positive-correlation.-however-if-we-take-a-look-at-the-correlation-test-cortest2-we-can-see-that-the-pvalue-is-0.1951-hence-even-with-a-confidence-level-of-10-we-cannot-reject-the-null-hypothesis-that-the-correlation-happened-by-chance..html"><i class="fa fa-check"></i><b>9</b> Observations. If we take a look at our correlations coefficient we can see two different stories. When it comes to number of covid-related tweets in relation to the number of deaths we have low correlation . The correlation coefficient is this case is 0.21(corr2), which means there is a positive correlation. However if we take a look at the correlation test cortest2 we can see that the pvalue is 0.1951, hence even with a confidence level of 10% we cannot reject the null hypothesis that the correlation happened by chance.</a></li>
-<li class="chapter" data-level="10" data-path="on-the-other-hand-we-can-analyse-our-correlation-of-cases-and-number-of-tweets.in-corr1-we-have-stored-a-correlation-value-of--0.48-and-the-associated-pvalue-is-0.0025-which-means-we-can-reject-our-null-hypothesis-and-state-that-there-is-a-correlation-between-the-number-of-cases-and-number-of-tweets..html"><a href="on-the-other-hand-we-can-analyse-our-correlation-of-cases-and-number-of-tweets.in-corr1-we-have-stored-a-correlation-value-of--0.48-and-the-associated-pvalue-is-0.0025-which-means-we-can-reject-our-null-hypothesis-and-state-that-there-is-a-correlation-between-the-number-of-cases-and-number-of-tweets..html"><i class="fa fa-check"></i><b>10</b> On the other hand, we can analyse our correlation of cases and number of tweets.In corr1 we have stored a correlation value of -0.48 and the associated pvalue is 0.0025, which means we can reject our null hypothesis and state that there is a correlation between the number of cases and number of tweets.</a></li>
-<li class="chapter" data-level="11" data-path="the-surprising-feature-is-that-the-correlation-is-negative-where-common-sense-may-suggest-there-would-be-a-positive-correlation.in-other-words-we-may-expect-higher-number-of-cases-could-trigger-a-higher-number-of-people-talking-about-it..html"><a href="the-surprising-feature-is-that-the-correlation-is-negative-where-common-sense-may-suggest-there-would-be-a-positive-correlation.in-other-words-we-may-expect-higher-number-of-cases-could-trigger-a-higher-number-of-people-talking-about-it..html"><i class="fa fa-check"></i><b>11</b> The surprising feature, is that the correlation is negative, where common sense may suggest there would be a positive correlation.In other words, we may expect, higher number of cases could trigger a higher number of people talking about it.</a></li>
-<li class="chapter" data-level="12" data-path="the-truth-may-be-another-one.-we-suspect-that-the-real-correlation-may-be-linked-to-the-dates-itself.-as-we-can-see-in-the-interval-chart-we-have-that-in-the-first-5-weeks-start-date-412020-people-were-more-scared-and-more-prone-to-talk-about-it-then-as-the-virus-became-usual-among-our-lives-the-covid-tweets-chat-started-to-slowly-but-steadily-decline.-even-in-the-last-part-of-the-graph-when-cases-started-taking-off-exponentially-the-number-of-covid-related-tweets-continued-to-slow..html"><a href="the-truth-may-be-another-one.-we-suspect-that-the-real-correlation-may-be-linked-to-the-dates-itself.-as-we-can-see-in-the-interval-chart-we-have-that-in-the-first-5-weeks-start-date-412020-people-were-more-scared-and-more-prone-to-talk-about-it-then-as-the-virus-became-usual-among-our-lives-the-covid-tweets-chat-started-to-slowly-but-steadily-decline.-even-in-the-last-part-of-the-graph-when-cases-started-taking-off-exponentially-the-number-of-covid-related-tweets-continued-to-slow..html"><i class="fa fa-check"></i><b>12</b> The truth may be another one. We suspect that the real correlation may be linked to the dates itself. As we can see in the interval chart, we have that in the first 5 weeks (start date 4/1/2020), people were more scared and more prone to talk about it, then as the virus became usual among our lives, the covid tweets chat started to slowly but steadily decline. Even in the last part of the graph, when cases started taking off exponentially, the number of covid related tweets continued to slow.</a></li>
-<li class="chapter" data-level="13" data-path="section-1.html"><a href="section-1.html"><i class="fa fa-check"></i><b>13</b> </a></li>
-<li class="chapter" data-level="14" data-path="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc"><a href="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc"><i class="fa fa-check"></i><b>14</b> <code>{r} # # In movements we have the changing for percentage of transit of people in comparison to same period of time in 2019in the whole USA # dfmove&lt;-Movements # # We have to convert the dates that we have in a more suitable format so that we can use the comparison to other dfs # for (row in 1:nrow(dfmove)){ #    #     date&lt;-dfmove[row,'date'] #     arr&lt;-strsplit(date,split='-') #     dfmove[row,'year']=(arr[[1]][1]) #     dfmove[row,'month']=(arr[[1]][2]) #     dfmove[row,'day']=(arr[[1]][3]) #    # dfmove[row,'day']=strtoi(arr[[1]][3]) # } #  # dfmove$year&lt;-as.integer(dfmove$year) # dfmove$month&lt;-as.integer(dfmove$month) # dfmove$day&lt;-as.integer(dfmove$day) # dfmove&lt;-dfmove[dfmove$month&gt;=4 &amp; dfmove$year==2020,] # n&lt;-dim(dfmove)[1] # dfmove&lt;-dfmove[1:(n-18),] # # we are going to get the columns that we need, cleaning the data from useless columns # dfmove$interval&lt;-0 # dfmove&lt;-dfmove[c(10:19)] # #We order them by the date so we can use the function do_interval and compare the results # dfmove&lt;-dfmove[order(dfmove$year,dfmove$month,dfmove$day),] # dfmove %&gt;% map_df(rev) # dfmovem&lt;-do_interval(dfmove,k) # #To have the correct change over the period, we are going to divide the columns by the period #  # dfmovem[2:7]&lt;-dfmovem[,2:7]/k #  # df4final&lt;-merge(dfmovem,df32,by=c('interval')) # df4final1&lt;-merge(dfmovem,df31,by=c('interval')) # #We set a parameter so that we can easily change for our visualization # x1&lt;-df4final$retail_and_recreation_percent_change_from_baseline # corr41&lt;-cor(x1, df4final$tweet_counts) # cortest41&lt;-cor.test(x1, df4final$tweet_counts) # corr42&lt;-cor(x1, df4final1$cases) # cortest42&lt;-cor.test(x1, df4final1$cases) # ggplot(df4final, aes(x = x1, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm) # ggplot(df4final1, aes(x=df4final1$cases, y = x1)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm) # #create a ridgepllot with the different  # #pivoted&lt;-pivot_longer(df4final,cols = #c(df4final$retail_and_recreation_percent_change_from_baseline,df4final$grocery_and_pharmacy_percent_change_from_basel#ine,df4final$parks_percent_change_from_baseline,df4final$transit_stations_percent_change_from_baseline,df4final$workp#laces_percent_change_from_baseline,df4final$residential_percent_change_from_baseline),names_to = 'type',values_to = #'vals')</code></a>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc"><a href="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc#covid-vs.-mobility"><i class="fa fa-check"></i><b>14.1</b> COVID vs. Mobility</a></li>
-<li class="chapter" data-level="14.2" data-path="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc"><a href="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc#analyzing-the-policy-of-representatives-of-congress-through-their-tweets"><i class="fa fa-check"></i><b>14.2</b> Analyzing the policy of representatives of Congress through their tweets</a>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#covid-vs.-mobility"><i class="fa fa-check"></i><b>5.1</b> COVID vs. Mobility</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#analyzing-the-policy-of-representatives-of-congress-through-their-tweets"><i class="fa fa-check"></i><b>5.2</b> Analyzing the policy of representatives of Congress through their tweets</a>
 <ul>
-<li class="chapter" data-level="14.2.1" data-path="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc"><a href="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc#extracting-the-data"><i class="fa fa-check"></i><b>14.2.1</b> Extracting the data</a></li>
-<li class="chapter" data-level="14.2.2" data-path="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc"><a href="r-in-movements-we-have-the-changing-for-percentage-of-transit-of-people-in-comparison-to-same-period-of-time-in-2019in-the-whole-usa-dfmove-movements-we-have-to-convert-the-dates-that-we-have-in-a-more-suitable-format-so-that-we-can-use-the-comparison-to-other-dfs-for-row-in-1nrowdfmove-date-dfmoverowdate-arr-strsplitdatesplit--dfmoverowyeararr11-dfmoverowmontharr12-dfmoverowdayarr13-dfmoverowdaystrtoiarr13-dfmoveyear-as.integerdfmoveyear-dfmovemonth-as.integerdfmovemonth-dfmoveday-as.integerdfmoveday-dfmove-dfmovedfmovemonth4-dfmoveyear2020-n-dimdfmove1-dfmove-dfmove1n-18-we-are-going-to-get-the-columns-that-we-need-cleaning-the-data-from-useless-columns-dfmoveinterval-0-dfmove-dfmovec1019-we-order-them-by-the-date-so-we-can-use-the-function-do_interval-and-compare-the-results-dfmove-dfmoveorderdfmoveyeardfmovemonthdfmoveday-dfmove-map_dfrev-dfmovem-do_intervaldfmovek-to-have-the-correct-change-over-the-period-we-are-going-to-divide-the-columns-by-the-period-dfmovem27-dfmovem27k-df4final-mergedfmovemdf32byc#patterns-in-policy"><i class="fa fa-check"></i><b>14.2.2</b> Patterns in policy</a></li>
+<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#extracting-the-data"><i class="fa fa-check"></i><b>5.2.1</b> Extracting the data</a></li>
+<li class="chapter" data-level="5.2.2" data-path="results.html"><a href="results.html#patterns-in-policy"><i class="fa fa-check"></i><b>5.2.2</b> Patterns in policy</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>15</b> Interactive component</a></li>
-<li class="chapter" data-level="16" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>16</b> Conclusion</a>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="conclusion.html"><a href="conclusion.html#covid-19-vs-mobility-for-us-congress-members"><i class="fa fa-check"></i><b>16.1</b> COVID-19 vs Mobility for US Congress Members</a></li>
-<li class="chapter" data-level="16.2" data-path="conclusion.html"><a href="conclusion.html#policy-related-tweets"><i class="fa fa-check"></i><b>16.2</b> Policy Related Tweets</a></li>
+<li class="chapter" data-level="7.1" data-path="conclusion.html"><a href="conclusion.html#covid-19-vs-mobility-for-us-congress-members"><i class="fa fa-check"></i><b>7.1</b> COVID-19 vs Mobility for US Congress Members</a></li>
+<li class="chapter" data-level="7.2" data-path="conclusion.html"><a href="conclusion.html#policy-related-tweets"><i class="fa fa-check"></i><b>7.2</b> Policy Related Tweets</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -157,6 +148,227 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
+<!---
+# -- Nicolo's Code START --
+# ```{r}
+# # we filter the dataset to include only USA, this is because we are assuming that the majority of the english language tweets we are dealing are coming from USA.
+# # In data we are storing the data coming from https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
+# #which is recording the number of cases and deaths ion every day of 2020 by country.
+# 
+# # Ignoring
+# # testdata<-data[data$countryterritoryCode=='USA',]
+# 
+# #We are going to aggregate our values, in ciao1 we have the top 50 bigrams in tweets for each day. So in this case we are grouping the tweets by each day, so that we have a table showing year,month, day and the total number of Covid-related bigrams. We focused on bigrams so we can catch the combination COVID 19 among others
+# 
+# ciao1_mod<-aggregate(ciao1$counts,by=list(ciao1$year,ciao1$month,ciao1$day),FUN=sum)
+# #we are going to change the column's name (apparently when aggregating we are losing the columns names)
+# colnames(ciao1_mod)[1]<-'year'
+# colnames(ciao1_mod)[2]<-'month'
+# colnames(ciao1_mod)[3]<-'day'
+# colnames(ciao1_mod)[4]<-'tweet_counts'
+# 
+# #We are going to order our data by date, so we will be able to use a function to get rid of the dates and just use a common column called interval, so that we will be able to test our correlation between different spans of time
+# #We are going to order both cases and deaths, and tweets by their date
+# df3<-testdata[order(testdata$year,testdata$month,testdata$day), ]
+# df3 %>% map_df(rev)
+# ciao1_mod3<-ciao1_mod[order(ciao1_mod$year,ciao1_mod$month,ciao1_mod$day),]
+# ciao1_mod3 %>% map_df(rev)
+# #We are going to create a column interval, so that we can geet rid of the dates and ease up the merging of different tables and for now we set it to 0
+# ciao1_mod3$interval=0
+# df3$interval=0
+# #Now we are going to align the two tables so to have similar periods of time for our analysis. For this purpose we are going to consider the period from 04/1/2021 to the day 12/14/2021 which is the last one in one of the two tables
+# #To do that we filter our rows in that specific period
+# df3<-df3[df3$month>=4 & df3$year==2020,]
+# ciao1_mod3<-ciao1_mod3[ciao1_mod3$month>=4 & ciao1_mod3$year==2020,]
+# #We find out that the cases and deaths df is only till 12/14/2020 but the tweets is to 12/30 so we are going to eliminate the last 16 rows in our tweets df
+# n<-dim(ciao1_mod3)[1]
+# ciao1_mod3<-ciao1_mod3[1:(n-16),]
+# #We obtained the two datasets cleaned and parsed, the next styep would be to implement a function to create intervals
+# # Instead of having dates, we are going to pass a parameter k and divide the days we had into intervals
+# 
+# ```
+# ```{r}
+# #We decided that 7 days would be a nice interval to keep, it means we are going to conduct our correlation weekly. Of course we could change k to 14
+# k<-7
+# do_interval<-function(df,interval){
+#   # we are going to start numerating it from 1 cause we need to create a new column
+#   c=1
+# for (row in 1:nrow(df)){
+#     df[row,'interval']<- floor(c/interval)+1
+#   
+# #We increase our counter and divide by the interval parameter so that for each day we have the correspondant interval in a separeted column
+# c=c+1
+# }
+#  #here we are going to aggregate the cases, deaths or other metrics based on the intervals
+#   #The conditions that we put on the number of columns is used to differentiate the different data sets that we are going to pass. 
+#   if (ncol(df)>6){
+#     
+#     if(ncol(df)<14 & ncol(df)!=10){
+#     # We are in the cases and deaths table here
+#     #summing the variables on grouping by the interval
+# df<-aggregate(cbind(df$cases,df$deaths),by=list(df$interval),FUN=sum)
+# colnames(df)[1]<-'interval'
+# colnames(df)[2]<-'cases'
+# colnames(df)[3]<-'deaths'
+#     }else{
+#   #we are in the travel table here
+#   df<-aggregate(cbind(df[c(1:6)]),by=list(df$interval),FUN=sum)
+#   colnames(df)[1]<-'interval'
+# }
+# }else{
+#   #we are in the tweet counts table here
+#   df<-aggregate(df$tweet_counts,by=list(df$interval),FUN=sum)
+#   colnames(df)[1]<-'interval'
+#   colnames(df)[2]<-'tweet_counts'
+#   }
+#   return(df)
+# }
+# df31<-do_interval(df3,k)
+# df32<-do_interval(ciao1_mod3,k)
+# # we are going to merge by our interval, so then we can calculate correlation and plot the scatterplot and the best fitting line.
+# df3_final<-merge(df31,df32,by=c('interval'))
+# corr1<-cor(df3_final$cases, df3_final$tweet_counts)
+# cortest1<-cor.test(df3_final$cases, df3_final$tweet_counts)
+# corr2<-cor(df3_final$deaths, df3_final$tweet_counts)
+# cortest2<-cor.test(df3_final$deaths, df3_final$tweet_counts)
+# ggplot(df3_final, aes(x = deaths, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm)
+# ggplot(df3_final, aes(x = cases, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='red') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm)
+# #visualizing the time series of the cases 
+# ggplot(df3_final,aes(x=interval))+ geom_line(aes(y=cases),size = 0.5, alpha = 0.3, col='red') + geom_line(aes(y=tweet_counts),size = 0.5, alpha = 0.3, col='blue')+scale_x_continuous(labels = scales::comma)+xlab('week')+ylab('Cases and tweet counts')
+# # we decided to divide by the average so to normalize our results and have a sense of what the correlation is
+# # in this case, the y axis is not useful, but we just observe the patterns
+# ggplot(df3_final,aes(x=interval))+ geom_line(aes(y=deaths/mean(deaths)),size = 0.5, alpha = 0.3, col='red') + geom_line(aes(y=tweet_counts/mean(tweet_counts)),size = 0.5, alpha = 0.3, col='blue')+scale_x_continuous(labels = scales::comma)+xlab('week')+ylab('Proportions of deaths and tweet counts')
+# ```
+# Observations. If we take a look at our correlations coefficient we can see two different stories. When it comes to number of covid-related tweets in relation to the number of deaths we have low correlation . The correlation coefficient is this case is 0.21(corr2), which means there is a positive correlation. However if we take a look at the correlation test cortest2 we can see that the pvalue is 0.1951, hence even with a confidence level of 10% we cannot reject the null hypothesis that the correlation happened by chance.
+# On the other hand, we can analyse our correlation of cases and number of tweets.In corr1 we have stored a correlation value of -0.48 and the associated pvalue is 0.0025, which means we can reject our null hypothesis and state that there is a correlation between the number of cases and number of tweets. 
+# The surprising feature, is that the correlation is negative, where common sense may suggest there would be a positive correlation.In other words, we may expect, higher number of cases could trigger a higher number of people talking about it.
+# The truth may be another one. We suspect that the real correlation may be linked to the dates itself. As we can see in the interval chart, we have that in the first 5 weeks (start date 4/1/2020), people were more scared and more prone to talk about it, then as the virus became usual among our lives, the covid tweets chat started to slowly but steadily decline. Even in the last part of the graph, when cases started taking off exponentially, the number of covid related tweets continued to slow.  
+# 
+# ```{r}
+# # In movements we have the changing for percentage of transit of people in comparison to same period of time in 2019in the whole USA
+# dfmove<-Movements
+# # We have to convert the dates that we have in a more suitable format so that we can use the comparison to other dfs
+# for (row in 1:nrow(dfmove)){
+#   
+#     date<-dfmove[row,'date']
+#     arr<-strsplit(date,split='-')
+#     dfmove[row,'year']=(arr[[1]][1])
+#     dfmove[row,'month']=(arr[[1]][2])
+#     dfmove[row,'day']=(arr[[1]][3])
+#    # dfmove[row,'day']=strtoi(arr[[1]][3])
+# }
+# 
+# dfmove$year<-as.integer(dfmove$year)
+# dfmove$month<-as.integer(dfmove$month)
+# dfmove$day<-as.integer(dfmove$day)
+# dfmove<-dfmove[dfmove$month>=4 & dfmove$year==2020,]
+# n<-dim(dfmove)[1]
+# dfmove<-dfmove[1:(n-18),]
+# # we are going to get the columns that we need, cleaning the data from useless columns
+# dfmove$interval<-0
+# dfmove<-dfmove[c(10:19)]
+# #We order them by the date so we can use the function do_interval and compare the results
+# dfmove<-dfmove[order(dfmove$year,dfmove$month,dfmove$day),]
+# dfmove %>% map_df(rev)
+# dfmovem<-do_interval(dfmove,k)
+# #To have the correct change over the period, we are going to divide the columns by the period
+# 
+# dfmovem[2:7]<-dfmovem[,2:7]/k
+# 
+# df4final<-merge(dfmovem,df32,by=c('interval'))
+# df4final1<-merge(dfmovem,df31,by=c('interval'))
+# #We set a parameter so that we can easily change for our visualization
+# x1<-df4final$retail_and_recreation_percent_change_from_baseline
+# corr41<-cor(x1, df4final$tweet_counts)
+# cortest41<-cor.test(x1, df4final$tweet_counts)
+# corr42<-cor(x1, df4final1$cases)
+# cortest42<-cor.test(x1, df4final1$cases)
+# ggplot(df4final, aes(x = x1, y = tweet_counts)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm)
+# ggplot(df4final1, aes(x=df4final1$cases, y = x1)) + geom_point(size = 0.5, alpha = 0.3, col='black') + scale_x_continuous(labels = scales::comma)+geom_smooth(method=lm)
+# #create a ridgepllot with the different 
+# #pivoted<-pivot_longer(df4final,cols = #c(df4final$retail_and_recreation_percent_change_from_baseline,df4final$grocery_and_pharmacy_percent_change_from_basel#ine,df4final$parks_percent_change_from_baseline,df4final$transit_stations_percent_change_from_baseline,df4final$workp#laces_percent_change_from_baseline,df4final$residential_percent_change_from_baseline),names_to = 'type',values_to = #'vals')
+```
+# -- Nicolo's Code END --
+-->
+<p><img src="nicolo_images/Cases_tweetcounts_timeseries.png" alt="a" />
+<img src="nicolo_images/deaths_tweetcounts_correlation.png" alt="b" />
+<img src="./nicolo_images/deaths_tweets_timeseries_normalised" alt="c" /></p>
+<p>If we take a look at our correlations coefficient we can see two different stories. When it comes to number of covid-related tweets in relation to the number of deaths we have low correlation . The correlation coefficient is this case is 0.21(corr2), which means there is a positive correlation. However if we take a look at the correlation test cortest2 we can see that the pvalue is 0.1951, hence even with a confidence level of 10% we cannot reject the null hypothesis that the correlation happened by chance. On the other hand, we can analyse our correlation of cases and number of tweets.In corr1 we have stored a correlation value of -0.48 and the associated pvalue is 0.0025, which means we can reject our null hypothesis and state that there is a correlation between the number of cases and number of tweets. The surprising feature, is that the correlation is negative, where common sense may suggest there would be a positive correlation.In other words, we may expect, higher number of cases could trigger a higher number of people talking about it. The truth may be another one. We suspect that the real correlation may be linked to the dates itself. As we can see in the interval chart, we have that in the first 5 weeks (start date 4/1/2020), people were more scared and more prone to talk about it, then as the virus became usual among our lives, the covid tweets chat started to slowly but steadily decline. Even in the last part of the graph, when cases started taking off exponentially, the number of covid related tweets continued to slow.</p>
+<p><img src="nicolo_images/mobility_cases_correlation.png" alt="d" />
+<img src="nicolo_images/tweetcounts_cases_correlation_weekly.png" alt="e" />
+<img src="nicolo_images/tweetcounts_retailmobility_correlation.png" alt="f" /></p>
+<p>We can observe that we have a negative correlation between the retail and recreation activity movement and the number of tweets. Which means that in general, the more tweet are written, the less mobility was experienced for the purposes aforementioned. The cause of this may rely in again more in the timeline of events. The biggest mobility changes may have occurred at the start of the pandemics in USA. Therefore,we know the highest number of tweets were at the start of (first 10 weeks). This fact coupled with the fact that either because people were more scared to go out, or either because some restricting policies were promoted; could be the reason of this negative correlation. This correlation has a very low p-value of 0.0118, hence we can again refuse the null hypothesis at a 2% confidence level. On the other hand, we cant make any assumption on the retail movement,because of the p-value.</p>
+<div id="covid-vs.-mobility" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> COVID vs. Mobility</h2>
+<p><img src="finalproj_files/figure-html/correlation-1.png" width="672" style="display: block; margin: auto;" />
+Rather unsurprisingly, there seems to be little correlation between the number of tweets by members of the US Congress and changes in mobility in their respective areas. However, something that is different across categories is the variance in the data. For example, the Parks &amp; Recreation category has the highest variation followed by the Transit Station. It makes sense for the Residential and Workplaces categories to have low variance. One possible explanation is that Parks &amp; Recreation encompasses a large variety of activities and settings. The outliers and difference in variance is a rather interesting phenomenon in this visualization. An interesting follow-up to this plot is the question: are the outliers across location categories the same congress members? It is possible that these are different outliers across each category. But there are 3 consistent outliers across the following categories: Grocery &amp; Pharmacy, Parks &amp; Recreation, Retail, and Transit Station.</p>
+<p><img src="finalproj_files/figure-html/common_outliers-1.png" width="672" style="display: block; margin: auto;" />
+The outliers in the aforementioned categories are in fact the same 3 outliers! Most of them have non-covid related tweets which could be why they are so influential. Mazie K. Hirono is senator from Hawaii, Brian Schatz is a senator from Ohio, and Ed Case is a representative from Hawaii. Since two senators are from Hawaii, this suggests a geographic element to the extreme changes in mobility relative to other representatives. That being said, having a member from Ohio casts doubt on a solely geographic explanation. We can look at the content of their tweets a bit more closely to uncover any potential patterns. Specifically, let us look at the content of their tweets for COVID adjacent terms (masks, vaccines, etc).</p>
+<p><img src="finalproj_files/figure-html/congress_sentiment-1.png" width="672" style="display: block; margin: auto;" />
+While it is no surprise that vaccines, testing, and masks were included among these outliers, it is interesting to note that social distancing is not as frequently mentioned. Perhaps this is a clue to the types of outreach and education that sticks with constituents. Masks and testing appear to be the most consistently frequent sentiments across the congress members’ tweets. Herd immunity is also absent from these outliers’ tweets.</p>
+</div>
+<div id="analyzing-the-policy-of-representatives-of-congress-through-their-tweets" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Analyzing the policy of representatives of Congress through their tweets</h2>
+<div id="extracting-the-data" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Extracting the data</h3>
+<p>We now have a look at what COVID-related policies the representatives of US Congress tweet about, and how they feel about those. To this end, we collected a dataset of all tweets from the representatives in the year 2020 as described in section 2. We captured the sentiment of these tweets through a Natural Language Processing model that gave each tweet a ‘positive’ and a ‘negative’ score. We elaborated on this in section 3.</p>
+<p>Over the course of the pandemic, numerous ways have been suggested to <em>flatten the curve</em>. We summarize them into 5 categories: vaccination, testing, lockdown, face masks, and social distancing. For each category a number of keywords is specified:</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="83%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Policy</th>
+<th>Keywords</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vaccination</td>
+<td>vaccination, vaccinated, vaccine</td>
+</tr>
+<tr class="even">
+<td>Testing</td>
+<td>testing, gettested, tested, PCR</td>
+</tr>
+<tr class="odd">
+<td>Lockdown</td>
+<td>lockdown, quarantine, quarantining</td>
+</tr>
+<tr class="even">
+<td>Face masks</td>
+<td>mask, face covering, face cover, masking, facemask</td>
+</tr>
+<tr class="odd">
+<td>Social distancing</td>
+<td>social distancing, socialdistancing, safe distance, physical distancing, 6 feet apart, 6feetapart</td>
+</tr>
+</tbody>
+</table>
+<p>As such, each tweet can be classified as ‘related’ to a certain policy by checking if it contains any of these keywords.</p>
+</div>
+<div id="patterns-in-policy" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Patterns in policy</h3>
+<p>In the media, it is clear that politicians’ preferences for these policies largely differ. We try to find patterns in these preferences by firstly looking at the frequency in tweets related to these policies. In the parallel coordinate plot below, every line represents a member of Congress, the values correspond to the frequency of their tweets related to a certain policy.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>We notice some interesting patterns here. Overall it is clear that democrats tweet more frequently about testing and masking up as preventive measures. Interestingly, there appears to be an inverse relationship between the tweet frequency on masks and social distancing. Some members of congress focus on masking up, whereas others shift their focus to social distancing as a way of slowing the spread of the virus. We can also see that few republicans tweet about masking up as a preventive measure, however, there is a significant fraction of republicans that do tweet about social distancing and testing in the battle against COVID. Though, the most frequent tweeters on social distancing are Democrat.</p>
+<p>Perhaps the most surprising insight in this graph is that a lockdown is more frequently discussed by republicans. We can see that not many democrats tweet about this, they resort to other policies. There are even some outliers among the republicans that tweet very frequently about a lockdown. Taking into account the media coverage over the past year this is rather surprising as the republican party generally advocated for opening up the country. The question remains whether these republicans are actually promoting or contesting a potential lockdown.</p>
+<p>The sentiment analysis sheds some light on this. For every tweet we have a ‘positive’ and a ‘negative’ score provided by the NLP model. In the plot below we visualize the average ‘positiveness’ of tweets for every policy category, per party. This ‘positiveness’ is defined as the ratio of the average positive score for tweets related to a policy to the average score of tweets not related to this policy. A score &gt; 1 indicates that tweets on a certain policy are generally more positive. A ‘positiveness’ &lt; 1 indicates a rather negative sentiment towards this policy.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>For all policy categories except ‘lockdown’, the sentiment is about the same for both parties. However, a lockdown is contentious. There is a clear negative sentiment of republicans towards a lockdown, whereas for democrats a lockdown is percepted more positive than other measures. Republican representative <span class="citation">@RepDanCrenshaw</span> is the furthest outlier on the lockdown scale. His tweets indeed show a very negative sentiment towards a lockdown:</p>
+<pre><code>## [1] &quot;Speaker Pelosi holds COVID relief hostage while people in her state suffer under Democrat lockdowns.The lockdowns need to stop. Pelosi’s political games need to stop.All of these so-called “leaders” need to put the country first for once. https://t.co/V8PPpBnv7L&quot;                                    
+## [2] &quot;Gov. Cuomo incessantly lectures and criticizes GOP governors for loosening lockdowns to save livelihoods. And much of the media lets him get away with it.But we can’t ignore his disastrous decisions that led to 32000 people dying and the exact spike experts warned us about. https://t.co/OJ2buRjB4R&quot;
+## [3] &quot;“We have to live with the virus risks while fortifying the health system and protecting the most vulnerable.”This is exactly right. We can’t allow fear-mongers to use new cases to push for new lockdowns. We can trust Americans to understand the risks and safely reopen. https://t.co/iuEVjtURRY&quot;     
+## [4] &quot;“The same states that are loudest in demanding a federal rescue have hurt themselves the most with long strict lockdowns and tax-and-spend policies.”Spot on from @WSJopinion. The left is also the loudest in shaming red states for reopening and getting people back to work. https://t.co/PPJSQj0RK4&quot;  
+## [5] &quot;RT @HouseCommerce: Spread the word that a national quarantine is not real. Be sure to follow @CDCgov for accurate and most up-to-date info…&quot;</code></pre>
+<p>We compare his sentiment profile to that to one of the democrats from the cluster that promotes social distancing the most: <span class="citation">@RepKathleenRice</span>.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Although the democrat representative <span class="citation">@RepKathleenRice</span> is significantly less vocal about a lockdown, her tweets on the matter are convincingly positive. <span class="citation">@RepDanCrenshaw</span>’s is relatively pessimistic. He clearly prefers social distancing and vaccination as opposed to masking up and a lockdown.</p>
+
+</div>
+</div>
 </div>
             </section>
 
@@ -164,7 +376,7 @@
         </div>
       </div>
 <a href="missing-values.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="section.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="interactive-component.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
