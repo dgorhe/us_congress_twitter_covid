@@ -201,7 +201,8 @@ The und values for lang are not necessarily a detriment to our overall analysis 
 ## Other Columns
 There are no missing values from the other columns. This is mainly a result of the way the data was extracted. We had known Twitter users in mind and we extracted all their tweets within a specified time domain. Every tweet that could be retrieved has a corresponding identifying number (i.e. tweet_id field is non-empty). This isn't a problem since it gives us much more information to work with. There are entire fields dedicated to analyzing subsets of linguistic content. From this data we can look at a multitude of features that could be useful to relate to COVID. For example, we can look at the frequency of the words COVID and COVID-19 over time, across congress members, and consequently by region. We have almost 500,000 tweets to analyze so even the simplest features will be useful. 
 
-
+## Number of tweets and cases
+We did not encounter problem with the missing values, indeed, the problem was the opposite, too much data. We were lucky enough to find very high quality data online.
 
 
 
