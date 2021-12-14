@@ -1,2 +1,4 @@
 # Conclusion
 
+## Number of tweets and cases
+In conclusion, even though we can find some correlation between the number of cases and the number of covid related tweets, it is hard to establish a possible causati
