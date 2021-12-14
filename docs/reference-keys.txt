@@ -20,6 +20,10 @@ impact-of-missing-lang-values
 other-columns
 number-of-tweets-cases-and-mobility-2
 results
+covid-vs.-mobility
+analyzing-the-policy-of-representatives-of-congress-through-their-tweets
+extracting-the-data
+patterns-in-policy
 interactive-component
 conclusion
 number-of-tweets-cases-and-mobility-3
