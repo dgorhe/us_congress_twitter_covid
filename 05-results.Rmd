@@ -27,7 +27,8 @@ tweets_with_mobility <- "https://us-congress-twitter-covid.s3.amazonaws.com/twee
 tweets <- read_csv(tweets_with_mobility)
 ```
 
-# <!-- Nicolo's Code START -->
+<!---
+# -- Nicolo's Code START --
 # ```{r}
 # # we filter the dataset to include only USA, this is because we are assuming that the majority of the english language tweets we are dealing are coming from USA.
 # # In data we are storing the data coming from https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
@@ -166,8 +167,8 @@ tweets <- read_csv(tweets_with_mobility)
 # #create a ridgepllot with the different 
 # #pivoted<-pivot_longer(df4final,cols = #c(df4final$retail_and_recreation_percent_change_from_baseline,df4final$grocery_and_pharmacy_percent_change_from_basel#ine,df4final$parks_percent_change_from_baseline,df4final$transit_stations_percent_change_from_baseline,df4final$workp#laces_percent_change_from_baseline,df4final$residential_percent_change_from_baseline),names_to = 'type',values_to = #'vals')
 ```
-<!-- Nicolo's Code END -->
-
+# -- Nicolo's Code END --
+-->
 
 ![a](./nicolo_images/Cases_tweetcounts_timeseries.png)
 ![b](./nicolo_images/deaths_tweetcounts_correlation.png)

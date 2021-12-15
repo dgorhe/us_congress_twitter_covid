@@ -1,3 +1,51 @@
 # Interactive component
 
 
+```{r, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(maps)
+```
+
+```{r, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE}
+df <- read.csv("https://us-congress-twitter-covid.s3.amazonaws.com/for_interactive_plot.csv")
+df$date <- as.Date(strptime(df$date_and_time, "%Y-%m-%d %H:%M:%S+00:00"))
+df <- df %>%
+  filter(covid_label == 'covid') %>%
+  group_by(date, unabbreviated_state) %>%
+  count()
+df$region <- tolower(df$unabbreviated_state)
+df
+```
+
+```{r, echo=FALSE, warning=FALSE, results='hide', fig.keep='all', message=FALSE, animation.hook='gifski', interval=0.15}
+usa_map <- map_data("state")
+
+dates = unique(df$date)
+
+for (i in 1:365) {
+  y <- dates[i]
+  print(
+    df %>%
+      filter(date == y) %>%
+      ggplot() +
+      geom_map(
+        dat = usa_map, map = usa_map, aes(map_id = region),
+        fill = "#fff7bc", color = "#fff7bc"
+      ) +
+      geom_map(map = usa_map, aes(map_id = region, fill = n)) +
+      scale_fill_gradient(low = "#fff7bc", high = "#cc4c02", name = "Number of tweets", limits = c(0, max(df$n))) +
+      expand_limits(x = usa_map$long, y = usa_map$lat) +
+      labs(title = paste("Number of COVID related tweets by members of US Congress on ", y)) + 
+      xlab(NULL) + 
+      ylab(NULL) +
+      theme(axis.line=element_blank(), axis.text.x=element_blank(),
+          axis.text.y=element_blank(), axis.ticks=element_blank(),
+          axis.title.x=element_blank(),
+          axis.title.y=element_blank(),
+          panel.background=element_blank(), panel.border=element_blank(), panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(), plot.background=element_blank())
+  )
+}
+```
